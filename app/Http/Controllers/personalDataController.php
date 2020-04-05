@@ -19,6 +19,6 @@ class personalDataController extends Controller
         $db->personalDataName = $request->personalDataName;
         $db->personalDataValue = "";
         $db->save();
-        return $request->personalDataName;
+        return redirect('personalData');
     }
 }
