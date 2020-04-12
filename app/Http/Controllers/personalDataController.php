@@ -14,11 +14,16 @@ class personalDataController extends Controller
         ]);  
     }
 
-    public function newPesonalDataItem(Request $request){
+    public function insertPesonalDataInDB(Request $request){
         $db = new PersonalData();
         $db->personalDataName = $request->personalDataName;
-        $db->personalDataValue = "";
+        $db->personalDataValue = $request->personalDataValue;
         $db->save();
+        return redirect('personalData');
+    }
+
+    public function deletePesonalDataInDB(Request $request,PersonalData $personalData){
+        $personalData -> delete();
         return redirect('personalData');
     }
 }
