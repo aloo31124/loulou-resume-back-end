@@ -6,10 +6,8 @@
 <body>
     @include('layout.pageComponent.head')
     @include('layout.pageComponent.nav')
-    <div class="container">
-        <div class="row">
-            @yield('content')
-        </div>
+    <div class="container">        
+        @yield('content')        
     </div>
     @include('layout.pageComponent.jsdefault')
 </body>

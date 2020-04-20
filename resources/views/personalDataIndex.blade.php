@@ -1,15 +1,19 @@
 @extends('layout.master.baseMaster')
 
 @section('content')
-<div class="col-12 col-lg-10">
+<div class="row">
+    <div class="col-12 col-lg-12" style="margin-top:20px">
+        <form action="/personalData" method="POST">
+        {{ csrf_field() }}
+            <input type="text" placeholder="請輸入資料" name="personalDataName">
+            <input type="text" placeholder="請輸入資料" name="personalDataValue">
+            <input type="submit">
+        </form>
+    </div>
+</div>
 
-    <form action="/personalData" method="POST">
-    {{ csrf_field() }}
-        <input type="text" placeholder="請輸入資料" name="personalDataName">
-        <input type="text" placeholder="請輸入資料" name="personalDataValue">
-        <input type="submit">
-    </form>
-
+<div class="row">
+<div class="col-12 col-lg-12" style="margin-top:20px">
     <table class="table">
         <thead>
             <tr>
@@ -41,6 +45,6 @@
         @endforeach
         </tbody>
     </table>
-
+</div>
 </div>
 @endsection

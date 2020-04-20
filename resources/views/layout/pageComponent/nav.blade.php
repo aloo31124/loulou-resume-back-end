@@ -8,7 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item ">
-        <a class="nav-link" href="/#">基本資料<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/personalData">基本資料<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/#">工作技能/能力</a>
