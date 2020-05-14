@@ -20,8 +20,5 @@ Route::get('/', function () {
 
 Route::get('/personalData','personalDataController@index');
 Route::post('/personalData','personalDataController@insertPesonalDataInDB');
-Route::delete('/personalData/{personalData}','personalDataController@deletePesonalDataInDB');
-// delete 路由要放 model的名稱
-
-//Route::get('/personalData/{personalData}','personalDataController@deletePesonalDataInDB');
-///comments/{comment}/edit
+Route::delete('/personalData/delete/{personalData}','personalDataController@deletePesonalDataInDB');
+Route::put('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');

@@ -1,13 +1,15 @@
 @extends('layout.master.baseMaster')
 
 @section('content')
+
+
 <div class="row">
     <div class="col-12 col-lg-12" style="margin-top:20px">
         <form action="/personalData" method="POST">
         {{ csrf_field() }}
-            <input type="text" placeholder="請輸入資料" name="personalDataName">
-            <input type="text" placeholder="請輸入資料" name="personalDataValue">
-            <input type="submit">
+            <input type="text" placeholder="請輸入資料" name="insertPersonalDataName">
+            <input type="text" placeholder="請輸入資料" name="insertPersonalDataValue">
+            <input type="submit" class="btn btn-info">
         </form>
     </div>
 </div>
@@ -32,19 +34,65 @@
             <td> {{  $PersonalData->personalDataName }} </td>
             <td> {{  $PersonalData->personalDataValue }} </td>
             <td>
-                <input type="submit" value="edit" class="btn btn-info">
+                <input type="submit" value="edit" class="btn btn-info" data-toggle="modal" data-target="#editDataModalTargetId_{{ $PersonalData->id }}" >
             </td>
             <td>
-                <form action="/personalData/{{ $PersonalData->id }}" method="POST" >
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-                    <input type="submit" value="delete" class="btn btn-danger">
+                <form action="/personalData/delete/{{ $PersonalData->id }}" method="POST" >                  
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="delete" class="btn btn-danger" >
                 </form>
             </td>
             </tr>
+
+
+            <!-- Modal -->
+            <div class="modal fade " id="editDataModalTargetId_{{ $PersonalData->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
+              <div class="modal-dialog  modal-lg" role="document">
+                <form action="/personalData/edit/{{ $PersonalData->id }}" method="POST" >                    
+                  @csrf
+                  @method('PUT')
+
+                  <div class="modal-content">
+
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editModalLabel">編輯基本資料</h5>
+                    </div>
+
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label class="col-form-label">資料名稱:</label>
+                          <input type="text" class="form-control"  value="{{  $PersonalData->personalDataName }}" name="updatePersonalDataName">
+                        </div>
+                        <label class="col-form-label">資料內容:</label>
+                        <input type="text" class="form-control"  value="{{  $PersonalData->personalDataValue }}" name="updatePersonalDataValue">
+                      </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModalAndReload()" >Close</button>
+                        <input type="submit" value="save changes" class="btn btn-info" >                            
+                    </div>
+                  </div>
+
+                </form> 
+              </div>
+            </div>
+
         @endforeach
         </tbody>
     </table>
 </div>
 </div>
+
+
+<script>
+function closeModalAndReload(){
+  location.reload();
+}
+
+
+</script>
+
 @endsection
