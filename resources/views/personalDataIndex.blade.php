@@ -59,15 +59,13 @@
                       <h5 class="modal-title" id="editModalLabel">編輯基本資料</h5>
                     </div>
 
-                    <div class="modal-body">
-                      <form>
+                    <div class="modal-body">                      
                         <div class="form-group">
                           <label class="col-form-label">資料名稱:</label>
                           <input type="text" class="form-control"  value="{{  $PersonalData->personalDataName }}" name="updatePersonalDataName">
                         </div>
                         <label class="col-form-label">資料內容:</label>
-                        <input type="text" class="form-control"  value="{{  $PersonalData->personalDataValue }}" name="updatePersonalDataValue">
-                      </form>
+                        <input type="text" class="form-control"  value="{{  $PersonalData->personalDataValue }}" name="updatePersonalDataValue">                      
                     </div>
 
                     <div class="modal-footer">
