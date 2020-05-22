@@ -22,3 +22,5 @@ Route::get('/personalData','personalDataController@index');
 Route::post('/personalData','personalDataController@insertPesonalDataInDB');
 Route::delete('/personalData/delete/{personalData}','personalDataController@deletePesonalDataInDB');
 Route::put('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');
+
+Route::get('/workingAbility','workingAbilityController@showWorkingAbilityCategoryTreeView');

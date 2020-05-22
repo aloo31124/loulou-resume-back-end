@@ -11,7 +11,7 @@
         <a class="nav-link" href="/personalData">基本資料<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/#">工作技能/能力</a>
+        <a class="nav-link" href="/workingAbility">工作技能/能力</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/#">撰寫自傳</a>
