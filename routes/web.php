@@ -24,3 +24,4 @@ Route::delete('/personalData/delete/{personalData}','personalDataController@dele
 Route::put('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');
 
 Route::get('/workingAbility','workingAbilityController@showWorkingAbilityCategoryTreeView');
+Route::post('/workingAbilityTreeOneNodeNextLevel','workingAbilityController@showWorkingAbilityCategory_TreeViewOneNodeNextLevel');
