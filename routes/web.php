@@ -25,3 +25,5 @@ Route::put('/personalData/edit/{personalData}','personalDataController@updatePes
 
 Route::get('/workingAbility','workingAbilityController@showWorkingAbilityCategoryTreeView');
 Route::post('/workingAbilityTreeOneNodeNextLevel','workingAbilityController@showWorkingAbilityCategory_TreeViewOneNodeNextLevel');
+Route::get('/workingAbilityContent','workingAbilityController@buildWorkingAbilityRightContentCard');
+Route::get('/WorkingAbilityCategoryTitle','workingAbilityController@showWorkingAbilityCategoryTitle');

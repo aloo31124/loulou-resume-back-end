@@ -15,4 +15,10 @@ class workingAbilityCategory extends Model
         ->where('parent_id','=', $parentId )
         ->get();
     }
+
+    public function findWorkingAbilityCategoryById(int $id){
+        return DB::table('working_ability_category')
+        ->where('id','=', $id )
+        ->first();
+    }
 }
