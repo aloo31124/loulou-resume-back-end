@@ -8,12 +8,22 @@ use App\workingAbility;
 
 class workingAbilityController extends Controller
 {
-    public function showWorkingAbilityCategoryTreeView(){
+    public function index(){
         return view("workingAbilityIndex");
-    } 
+    }
+    
+    public function insertWorkingAbilityInDB(Request $reqeust){
+        $db = new workingAbility();
+        $db->name = $reqeust->insertWorkingAbilityName;
+        $db->discription = $reqeust->insertWorkingAbilityDiscription;
+        $db->working_ability_category_id = $reqeust->currentWorkingAbilityCategoryId;
+        $db->sort = 0;
+        $db->save();
+        return view("workingAbilityIndex");
+    }
 
     public function showWorkingAbilityCategory_TreeViewOneNodeNextLevel(Request $request){
-        return $this -> buildWorkingAbilityCategory_TreeViewOneLevel($request -> workingAbilityCategoryId);
+        return $this -> buildWorkingAbilityCategory_TreeViewOneLevel($request->workingAbilityCategoryId);
     }
 
     public function buildWorkingAbilityCategory_TreeViewOneLevel(int $parentId){
@@ -38,7 +48,7 @@ class workingAbilityController extends Controller
         
         foreach($workingAbilityInfoFromDB as $workingAbilityInfo){
             $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml
-            ."<div class='card'>"
+            ."<div class='card col-md-6 col-md-12 col-12'>"
             ."<div class='card-body'>"
             ."<h5 class='card-title'>".$workingAbilityInfo -> name ."</h5>"            
             ."<p class='card-text'>".$workingAbilityInfo -> discription ."</p>"

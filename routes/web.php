@@ -23,7 +23,8 @@ Route::post('/personalData','personalDataController@insertPesonalDataInDB');
 Route::delete('/personalData/delete/{personalData}','personalDataController@deletePesonalDataInDB');
 Route::put('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');
 
-Route::get('/workingAbility','workingAbilityController@showWorkingAbilityCategoryTreeView');
+Route::get('/workingAbility','workingAbilityController@index');
+Route::post('/workingAbility','workingAbilityController@insertWorkingAbilityInDB');
 Route::post('/workingAbilityTreeOneNodeNextLevel','workingAbilityController@showWorkingAbilityCategory_TreeViewOneNodeNextLevel');
 Route::get('/workingAbilityContent','workingAbilityController@buildWorkingAbilityRightContentCard');
 Route::get('/WorkingAbilityCategoryTitle','workingAbilityController@showWorkingAbilityCategoryTitle');

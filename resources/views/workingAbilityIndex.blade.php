@@ -25,6 +25,7 @@ $(document).ready(function(){
     } 
     buildRightContentCard(workingAbilityCategoryId);
     showWorkingAbilityCategoryTitle(workingAbilityCategoryId);
+    $('#currentWorkingAbilityCategoryId').val(workingAbilityCategoryId);
   });
   
   function buildTreeOneNodeNextLevel(workingAbilityCategoryId){
@@ -94,8 +95,41 @@ $(document).ready(function(){
 
   <div id="workingAbilityRightContent" class="col-8">  
     <h2>分類名稱:<span id='WorkingAbilityCategoryTitle'></span></h2>    
-    <button type='button' class='btn btn-info' >新增能力</button>    
-    <div id="workingAbilityContentCard" class="card-deck card-columns" style="margin-top:20px"></div>
+    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button>    
+
+    <!-- Modal -->
+    <div class="modal fade " id="newWorkingAbilityModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog  modal-lg" role="document">
+        <form action='/workingAbility' method='POST' >      
+          @csrf
+          <input type="hidden" id="currentWorkingAbilityCategoryId" name="currentWorkingAbilityCategoryId" value="0">
+
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">新增工作能力</h5>
+            </div>
+
+            <div class="modal-body">                      
+              <div class="form-group">
+                <label class="col-form-label">能力名稱:</label>
+                <input type="text" class="form-control"  value="" name="insertWorkingAbilityName">              
+                <label class="col-form-label">能力說明:</label>
+                <input type="text" class="form-control"  value="" name="insertWorkingAbilityDiscription">                      
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModalAndReload()" >Close</button>
+              <input type="submit" value="save changes" class="btn btn-info" >                            
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="workingAbilityContentCard" class="card-deck" style="margin-top:20px"></div>
+    
   </div>
 </div>
 
