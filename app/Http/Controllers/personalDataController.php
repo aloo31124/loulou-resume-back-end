@@ -27,8 +27,8 @@ class personalDataController extends Controller
         return redirect('personalData');
     }
 
-    public function updatePesonalDataInDB(Request $request){
-        $db = new PersonalData();
+    public function updatePesonalDataInDB(Request $request,PersonalData $personalData){        
+        $db = PersonalData::find( $personalData -> id );
         $db->personalDataName = $request->updatePersonalDataName;
         $db->personalDataValue = $request->updatePersonalDataValue;
         $db->save();
