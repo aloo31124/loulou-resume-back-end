@@ -46,9 +46,12 @@ class workingAbilityController extends Controller
         $workingAbilityInfoFromDB = $db -> findWorkingAbilityInfoByCategoryId($request -> workingAbilityCategoryId);
         $workingAbilityInfoCardHtml = "";
         
+        $cardCount = 1;
+        $cardNumInRow = 2;
         foreach($workingAbilityInfoFromDB as $workingAbilityInfo){
+            if($cardCount%$cardNumInRow==1  ) $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml."<div class='row col-12' style='margin-top:20px'>";
             $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml
-            ."<div class='card col-md-6 col-md-12 col-12'>"
+            ."<div class='card col-md-12 col-md-12 col-12'>"
             ."<div class='card-body'>"
             ."<h5 class='card-title'>".$workingAbilityInfo -> name ."</h5>"            
             ."<p class='card-text'>".$workingAbilityInfo -> discription ."</p>"
@@ -56,6 +59,8 @@ class workingAbilityController extends Controller
             ."<input type='submit' value='刪除' class='btn btn-danger' data-toggle='modal' data-target='' >"
             ."</div>"
             ."</div>";
+            if($cardCount%$cardNumInRow==0  ) $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml."</div>";
+            $cardCount ++;
         }
         return $workingAbilityInfoCardHtml;
     }
