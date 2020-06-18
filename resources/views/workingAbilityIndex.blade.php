@@ -41,7 +41,7 @@ $(document).ready(function(){
         }
       },
       error:function(){
-        alert("workingAbilityTreeOneNodeNextLevel error ");
+        console.log("workingAbilityTreeOneNodeNextLevel error ");
       }
     });
   }
@@ -53,6 +53,7 @@ $(document).ready(function(){
       data: {workingAbilityCategoryId : workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
       success:function(result){
         $("#WorkingAbilityCategoryTitle").html(result);
+        $("#WorkingAbilityCategoryTitleInNewModel").html(result);
       },
       error:function(){
         console.log("WorkingAbilityCategoryTitle error");
@@ -76,6 +77,36 @@ $(document).ready(function(){
   }
 
 });
+
+
+function newWorkingAbilityAndReloadRightContentCard(){
+  var insertWorkingAbilityName = $("#insertWorkingAbilityName").val();
+  var insertWorkingAbilityDiscription = $("#insertWorkingAbilityDiscription").val();
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  $.ajax({
+    type:'POST',
+    url:'/workingAbility',
+    data: {
+      insertWorkingAbilityName : insertWorkingAbilityName,
+      insertWorkingAbilityDiscription : insertWorkingAbilityDiscription,
+      currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
+      "_token": "{{ csrf_token() }}"
+    } ,//419
+    success:function(result){
+      $("#workingAbilityContentCard").html(result);
+    },
+    error:function(){
+      console.log("newWorkingAbilityAndReloadRightContentCard() error");
+    }
+  });
+  cleanNewWorkingAbilityModal();
+}
+
+function cleanNewWorkingAbilityModal(){
+  $("#insertWorkingAbilityName").val("");
+  $("#insertWorkingAbilityDiscription").val("");
+}
+
 </script>
 
 <div class="row" style="margin-top:20px">
@@ -97,11 +128,11 @@ $(document).ready(function(){
     <h2>分類名稱:<span id='WorkingAbilityCategoryTitle'></span></h2>    
     <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button>    
 
-    <!-- Modal -->
+    <!--new working ability Modal -->
     <div class="modal fade " id="newWorkingAbilityModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
       <div class="modal-dialog  modal-lg" role="document">
-        <form action='/workingAbility' method='POST' >      
-          @csrf
+             
+          
           <input type="hidden" id="currentWorkingAbilityCategoryId" name="currentWorkingAbilityCategoryId" value="0">
 
           <div class="modal-content">
@@ -109,22 +140,23 @@ $(document).ready(function(){
             <div class="modal-header">
               <h5 class="modal-title" id="editModalLabel">新增工作能力</h5>
             </div>
-
-            <div class="modal-body">                      
+            
+            <div class="modal-body">        
+              分類:<span id='WorkingAbilityCategoryTitleInNewModel'></span>              
               <div class="form-group">
                 <label class="col-form-label">能力名稱:</label>
-                <input type="text" class="form-control"  value="" name="insertWorkingAbilityName">              
+                <input type="text" class="form-control"  value="" id="insertWorkingAbilityName" name="insertWorkingAbilityName">              
                 <label class="col-form-label">能力說明:</label>
-                <input type="text" class="form-control"  value="" name="insertWorkingAbilityDiscription">                      
+                <input type="text" class="form-control"  value="" id="insertWorkingAbilityDiscription"  name="insertWorkingAbilityDiscription">                      
               </div>
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModalAndReload()" >Close</button>
-              <input type="submit" value="save changes" class="btn btn-info" >                            
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cleanNewWorkingAbilityModal()" >取消</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal" onclick="newWorkingAbilityAndReloadRightContentCard()" >儲存</button>                                       
             </div>
           </div>
-        </form>
+        
       </div>
     </div>
 

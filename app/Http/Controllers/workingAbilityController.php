@@ -14,12 +14,12 @@ class workingAbilityController extends Controller
     
     public function insertWorkingAbilityInDB(Request $reqeust){
         $db = new workingAbility();
-        $db->name = $reqeust->insertWorkingAbilityName;
-        $db->discription = $reqeust->insertWorkingAbilityDiscription;
-        $db->working_ability_category_id = $reqeust->currentWorkingAbilityCategoryId;
-        $db->sort = 0;
-        $db->save();
-        return view("workingAbilityIndex");
+        $db->name = $reqeust->insertWorkingAbilityName;        
+        $db->discription = $reqeust->insertWorkingAbilityDiscription;        
+        $db->working_ability_category_id = $reqeust->currentWorkingAbilityCategoryId;        
+        $db->sort = 0;                
+        $db->save();                
+        return $this->buildWorkingAbilityRightContentCard($reqeust->currentWorkingAbilityCategoryId);
     }
 
     public function showWorkingAbilityCategory_TreeViewOneNodeNextLevel(Request $request){
@@ -40,10 +40,14 @@ class workingAbilityController extends Controller
 
         return $workingAbilityTreeViewHtml;
     }
+
+    public function initalWorkingAbilityRightContentCard(Request $request){
+        return $this->buildWorkingAbilityRightContentCard($request->workingAbilityCategoryId);
+    }
     
-    public function buildWorkingAbilityRightContentCard(Request $request){
+    public function buildWorkingAbilityRightContentCard(int $workingAbilityCategoryId){
         $db = new workingAbility();
-        $workingAbilityInfoFromDB = $db -> findWorkingAbilityInfoByCategoryId($request -> workingAbilityCategoryId);
+        $workingAbilityInfoFromDB = $db -> findWorkingAbilityInfoByCategoryId($workingAbilityCategoryId);
         $workingAbilityInfoCardHtml = "";
         
         $cardCount = 1;
