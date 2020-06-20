@@ -12,21 +12,43 @@ $(document).ready(function(){
     showWorkingAbilityCategoryTitle(0);
   }
    
-  $("#workingAbilityLeftTree").on("click", ".list-group-item" ,function(){
-    var workingAbilityCategoryId = $(this).attr("id");
-    if($(this).next("ul").length == 0){
-      buildTreeOneNodeNextLevel(workingAbilityCategoryId);
-    }else{    
-      if($(this).next("ul").is(':hidden')){      
-        $(this).next('ul').show("slow");
-      }else{            
-        $(this).next('ul').hide("slow");
-      }
-    } 
+  $("#workingAbilityLeftTree").on("click", "span" ,function(){
+    var workingAbilityCategoryId = $(this).parent("li").attr("id");
+    changeTreeWordingWeightBolder($(this));
     buildRightContentCard(workingAbilityCategoryId);
     showWorkingAbilityCategoryTitle(workingAbilityCategoryId);
     $('#currentWorkingAbilityCategoryId').val(workingAbilityCategoryId);
   });
+
+  $("#workingAbilityLeftTree").on("click", "img" ,function(){
+    var workingAbilityCategoryId = $(this).closest("li").attr("id");
+    if($(this).parent("li").next("ul").length == 0){
+      $(this).attr('src','/icon/folder-open.png');
+      buildTreeOneNodeNextLevel(workingAbilityCategoryId);
+    }else{   
+      changeTreeUlshowAndHiden($(this));
+    }
+    changeTreeWordingWeightBolder($(this).next('span'));
+    buildRightContentCard(workingAbilityCategoryId);
+    showWorkingAbilityCategoryTitle(workingAbilityCategoryId);
+    $('#currentWorkingAbilityCategoryId').val(workingAbilityCategoryId);    
+  });
+
+  function changeTreeUlshowAndHiden(clickImg){ 
+    if(clickImg.parent("li").next('ul').is(':hidden')){      
+      clickImg.parent("li").next('ul').show("slow");
+      clickImg.attr('src','/icon/folder-open.png');
+    }else{            
+      clickImg.parent("li").next('ul').hide("slow")
+      clickImg.attr('src','/icon/folder-close.png');;
+    }
+  }
+
+  function changeTreeWordingWeightBolder(clickSpan){    
+    $("#workingAbilityLeftTree").find("span").removeClass("font-weight-bolder text-info h5");
+    clickSpan.addClass("font-weight-bolder text-info h5");
+  }
+
   
   function buildTreeOneNodeNextLevel(workingAbilityCategoryId){
     $.ajax({

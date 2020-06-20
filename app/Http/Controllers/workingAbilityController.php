@@ -49,8 +49,11 @@ class workingAbilityController extends Controller
         $workingAbilityTreeViewHtml = "<ul>";
             
         foreach($workingAbilityCategoriesFromDB as $workingAbilityCategory){
-            $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml.
-            "<li id='".$workingAbilityCategory -> id ."' class='list-group-item'>".$workingAbilityCategory -> name ."</li>";
+            $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml
+            ."<li id='".$workingAbilityCategory -> id ."' class='list-group-item'>"
+                ."<img id='tree_icon' class='rounded' src='/icon/folder-close.png' alt='profile Pic'>  "
+                ."<span >".$workingAbilityCategory -> name ."</span>"
+            ."</li>";
         }
 
         $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml."</ul>";
