@@ -12,6 +12,7 @@ class workingAbility extends Model
     public function findWorkingAbilityInfoByCategoryId(int $id){
         return DB::table("working_ability")
             ->where('working_ability_category_id','=',$id)
+            ->where('is_delete','=',0)
             ->get();
     }
 }

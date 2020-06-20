@@ -30,7 +30,7 @@ $(document).ready(function(){
   
   function buildTreeOneNodeNextLevel(workingAbilityCategoryId){
     $.ajax({
-      type:'POST',
+      type:'GET',
       url:'/workingAbilityTreeOneNodeNextLevel',
       data: {workingAbilityCategoryId:workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
       success:function(result){
@@ -46,21 +46,7 @@ $(document).ready(function(){
     });
   }
 
-  function showWorkingAbilityCategoryTitle(workingAbilityCategoryId){
-    $.ajax({
-      type:'GET',
-      url:'/WorkingAbilityCategoryTitle',
-      data: {workingAbilityCategoryId : workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
-      success:function(result){
-        $("#WorkingAbilityCategoryTitle").html(result);
-        $("#WorkingAbilityCategoryTitleInNewModel").html(result);
-      },
-      error:function(){
-        console.log("WorkingAbilityCategoryTitle error");
-      }
-
-    });
-  }
+  
 
   function buildRightContentCard(workingAbilityCategoryId){
     $.ajax({
@@ -78,6 +64,23 @@ $(document).ready(function(){
 
 });
 
+function showWorkingAbilityCategoryTitle(workingAbilityCategoryId){
+    $.ajax({
+      type:'GET',
+      url:'/WorkingAbilityCategoryTitle',
+      data: {workingAbilityCategoryId : workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
+      success:function(result){
+        $("#WorkingAbilityCategoryTitle").html(result);
+        $("#WorkingAbilityCategoryTitleInNewModel").html(result);
+        //$("#WorkingAbilityCategoryTitleInEditModel").html(result); //有多個 Modal
+      },
+      error:function(){
+        console.log("WorkingAbilityCategoryTitle error");
+      }
+
+    });
+  }
+  
 
 function newWorkingAbilityAndReloadRightContentCard(){
   var insertWorkingAbilityName = $("#insertWorkingAbilityName").val();
@@ -107,6 +110,55 @@ function cleanNewWorkingAbilityModal(){
   $("#insertWorkingAbilityDiscription").val("");
 }
 
+function editWorkingAbilityAndReloadRightContentCard(workingAbilityId){
+  var updateWorkingAbilityName = $("#updateWorkingAbilityName_"+ workingAbilityId).val();
+  var updateWorkingAbilityDiscription = $("#updateWorkingAbilityDiscription_" + workingAbilityId).val();
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  $.ajax({
+    type:'PUT',
+    url:'/workingAbility',
+    data: {
+      updateWorkingAbilityName : updateWorkingAbilityName,
+      updateWorkingAbilityDiscription : updateWorkingAbilityDiscription,
+      currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
+      workingAbilityId : workingAbilityId,
+      "_token": "{{ csrf_token() }}"
+    } ,//419
+    success:function(result){
+      $("#workingAbilityContentCard").html(result);
+    },
+    error:function(){
+      console.log("newWorkingAbilityAndReloadRightContentCard() error");
+    }
+  });
+  $(".modal-backdrop").removeClass("in").removeClass("fade").remove();
+  cleanEditWorkingAbilityModal();
+}
+
+function cleanEditWorkingAbilityModal(){
+  $("#updateWorkingAbilityName").val("");
+  $("#updateWorkingAbilityDiscription").val("");
+}
+
+function deleteWorkingAbilityAndReloadRightContentCard(workingAbilityId){
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  $.ajax({
+    type:'DELETE',
+    url:'/workingAbility',
+    data:{
+      workingAbilityId : workingAbilityId,
+      currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
+      "_token": "{{ csrf_token() }}"
+    },
+    success:function(result){
+      $("#workingAbilityContentCard").html(result);
+    },
+    error:function(){
+      console.log("deleteWorkingAbilityAndReloadRightContentCard() error");
+    }
+  });
+}
+
 </script>
 
 <div class="row" style="margin-top:20px">
@@ -125,22 +177,17 @@ function cleanNewWorkingAbilityModal(){
   </div>
 
   <div id="workingAbilityRightContent" class="col-8">  
+    <input type="hidden" id="currentWorkingAbilityCategoryId" name="currentWorkingAbilityCategoryId" value="0">
     <h2>分類名稱:<span id='WorkingAbilityCategoryTitle'></span></h2>    
     <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button>    
 
-    <!--new working ability Modal -->
+    <!--new working ability Modal start-->
     <div class="modal fade " id="newWorkingAbilityModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog  modal-lg" role="document">
-             
-          
-          <input type="hidden" id="currentWorkingAbilityCategoryId" name="currentWorkingAbilityCategoryId" value="0">
-
+      <div class="modal-dialog  modal-lg" role="document">          
           <div class="modal-content">
-
             <div class="modal-header">
               <h5 class="modal-title" id="editModalLabel">新增工作能力</h5>
-            </div>
-            
+            </div>            
             <div class="modal-body">        
               分類:<span id='WorkingAbilityCategoryTitleInNewModel'></span>              
               <div class="form-group">
@@ -155,10 +202,10 @@ function cleanNewWorkingAbilityModal(){
               <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cleanNewWorkingAbilityModal()" >取消</button>
               <button type="button" class="btn btn-info" data-dismiss="modal" onclick="newWorkingAbilityAndReloadRightContentCard()" >儲存</button>                                       
             </div>
-          </div>
-        
+          </div>        
       </div>
     </div>
+    <!--new working ability Modal end-->
 
     <div id="workingAbilityContentCard" class="card-deck" style="margin-top:20px"></div>
     

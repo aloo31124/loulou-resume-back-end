@@ -24,7 +24,10 @@ Route::delete('/personalData/delete/{personalData}','personalDataController@dele
 Route::put('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');
 
 Route::get('/workingAbility','workingAbilityController@index');
-Route::post('/workingAbility','workingAbilityController@insertWorkingAbilityInDB');
-Route::post('/workingAbilityTreeOneNodeNextLevel','workingAbilityController@showWorkingAbilityCategory_TreeViewOneNodeNextLevel');
+Route::post('/workingAbility','workingAbilityController@insertWorkingAbilityInDBAndReload');
+Route::put('/workingAbility','workingAbilityController@updateWorkingAbilityInDBAndReload');
+Route::delete('/workingAbility','workingAbilityController@deleteWorkingAbilityInDBAndReload');
+
+Route::get('/workingAbilityTreeOneNodeNextLevel','workingAbilityController@showWorkingAbilityCategory_TreeViewOneNodeNextLevel');
 Route::get('/workingAbilityContent','workingAbilityController@initalWorkingAbilityRightContentCard');
 Route::get('/WorkingAbilityCategoryTitle','workingAbilityController@showWorkingAbilityCategoryTitle');
