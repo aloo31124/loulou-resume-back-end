@@ -83,7 +83,7 @@ class workingAbilityController extends Controller
             foreach($workingAbilitiesFromDB as $workingAbility){
                 $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml
                 ."<li id='workingAbility_".$workingAbility->id ."' class='list-group-item'>"
-                    ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>  "
+                    ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
                     ."<span >".$workingAbility->name ."</span>"
                 ."</li>";
             }
@@ -107,7 +107,10 @@ class workingAbilityController extends Controller
             $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml
             ."<div class='card col-md-12 col-md-12 col-12'>"
                 ."<div class='card-body'>"
-                    ."<h5 class='card-title'>".$workingAbilityInfo->name ."</h5>"            
+                    ."<h5 class='card-title'>"
+                        ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
+                        .$workingAbilityInfo->name 
+                    ."</h5>"            
                     ."<p class='card-text'>".$workingAbilityInfo->discription ."</p>"
                     ."<input type='submit' value='編輯' class='btn btn-info' data-toggle='modal' data-target='#editWorkingAbilityModal_".$workingAbilityInfo->id."' >"
                     ."<input type='button' value='刪除' class='btn btn-danger' onclick='deleteWorkingAbilityAndReloadRightContentCard(".$workingAbilityInfo->id.")' >"

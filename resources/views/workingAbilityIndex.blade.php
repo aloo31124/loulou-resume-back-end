@@ -51,28 +51,7 @@ $(document).ready(function(){
   function changeTreeWordingWeightBolder(clickSpan){    
     $("#workingAbilityLeftTree").find("span").removeClass("font-weight-bolder text-info h5");
     clickSpan.addClass("font-weight-bolder text-info h5");
-  }
-
-  
-  function buildTreeThisNodeNextLevel(workingAbilityCategoryId){
-    $.ajax({
-      type:'GET',
-      url:'/workingAbilityTreeThisNodeNextLevel',
-      data: {workingAbilityCategoryId:workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
-      success:function(result){
-        if(workingAbilityCategoryId==0){// first level of Tree view
-          $("#workingAbilityLeftTree").append(result);
-        }else if(workingAbilityCategoryId>0){          
-          $("#"+workingAbilityCategoryId).after(result);        
-        }
-      },
-      error:function(){
-        console.log("workingAbilityTreeThisNodeNextLevel error ");
-      }
-    });
-  }
-
-  
+  }  
 
   function buildRightContentCard(workingAbilityCategoryId){
     $.ajax({
@@ -89,6 +68,24 @@ $(document).ready(function(){
   }
 
 });
+  
+function buildTreeThisNodeNextLevel(workingAbilityCategoryId){
+    $.ajax({
+      type:'GET',
+      url:'/workingAbilityTreeThisNodeNextLevel',
+      data: {workingAbilityCategoryId:workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
+      success:function(result){
+        if(workingAbilityCategoryId==0){// first level of Tree view
+          $("#workingAbilityLeftTree").append(result);
+        }else if(workingAbilityCategoryId>0){          
+          $("#"+workingAbilityCategoryId).after(result);        
+        }
+      },
+      error:function(){
+        console.log("workingAbilityTreeThisNodeNextLevel error ");
+      }
+    });
+}
 
 function showWorkingAbilityCategoryTitle(workingAbilityCategoryId){
   $.ajax({
@@ -127,6 +124,7 @@ function newWorkingAbilityAndReloadRightContentCard(){
     }
   });
   cleanNewWorkingAbilityModal();
+  changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId);
 }
 
 function cleanNewWorkingAbilityModal(){
@@ -157,6 +155,7 @@ function editWorkingAbilityAndReloadRightContentCard(workingAbilityId){
   });
   $(".modal-backdrop").removeClass("in").removeClass("fade").remove();
   cleanEditWorkingAbilityModal();
+  changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId);
 }
 
 function cleanEditWorkingAbilityModal(){
@@ -181,6 +180,15 @@ function deleteWorkingAbilityAndReloadRightContentCard(workingAbilityId){
       console.log("deleteWorkingAbilityAndReloadRightContentCard() error");
     }
   });
+  changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId);
+}
+
+function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
+  if(currentWorkingAbilityCategoryId==0)
+    $("#"+currentWorkingAbilityCategoryId).parent('ul').html('');  
+  else
+    $("#"+currentWorkingAbilityCategoryId).next('ul').html('');
+  buildTreeThisNodeNextLevel(currentWorkingAbilityCategoryId);
 }
 
 </script>
