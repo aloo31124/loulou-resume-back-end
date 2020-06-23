@@ -31,3 +31,4 @@ Route::delete('/workingAbility','workingAbilityController@deleteWorkingAbilityIn
 Route::get('/workingAbilityTreeThisNodeNextLevel','workingAbilityController@buildWorkingAbilityCategoryTree_ThisNodeNextLevel');
 Route::get('/workingAbilityContent','workingAbilityController@initalWorkingAbilityRightContentCard');
 Route::get('/WorkingAbilityCategoryTitle','workingAbilityController@showWorkingAbilityCategoryTitle');
+Route::post('/workingAbilityCategory','workingAbilityController@insertWorkingAbilityCategoryInDB');
