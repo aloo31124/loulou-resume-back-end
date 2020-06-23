@@ -7,31 +7,35 @@ $(document).ready(function(){
   initialWorkingAbilityPage();
 
   function initialWorkingAbilityPage(){
-    buildTreeOneNodeNextLevel(0);
+    buildTreeThisNodeNextLevel(0);
     buildRightContentCard(0);
     showWorkingAbilityCategoryTitle(0);
   }
    
   $("#workingAbilityLeftTree").on("click", "span" ,function(){
-    var workingAbilityCategoryId = $(this).parent("li").attr("id");
-    changeTreeWordingWeightBolder($(this));
-    buildRightContentCard(workingAbilityCategoryId);
-    showWorkingAbilityCategoryTitle(workingAbilityCategoryId);
-    $('#currentWorkingAbilityCategoryId').val(workingAbilityCategoryId);
+      if($(this).attr('id')=='folder_span'){
+      var workingAbilityCategoryId = $(this).parent("li").attr("id");
+      changeTreeWordingWeightBolder($(this));
+      buildRightContentCard(workingAbilityCategoryId);
+      showWorkingAbilityCategoryTitle(workingAbilityCategoryId);
+      $('#currentWorkingAbilityCategoryId').val(workingAbilityCategoryId);
+    }
   });
 
   $("#workingAbilityLeftTree").on("click", "img" ,function(){
-    var workingAbilityCategoryId = $(this).closest("li").attr("id");
-    if($(this).parent("li").next("ul").length == 0){
-      $(this).attr('src','/icon/folder-open.png');
-      buildTreeOneNodeNextLevel(workingAbilityCategoryId);
-    }else{   
-      changeTreeUlshowAndHiden($(this));
-    }
-    changeTreeWordingWeightBolder($(this).next('span'));
-    buildRightContentCard(workingAbilityCategoryId);
-    showWorkingAbilityCategoryTitle(workingAbilityCategoryId);
-    $('#currentWorkingAbilityCategoryId').val(workingAbilityCategoryId);    
+    if($(this).attr('id')=='folder_icon'){
+      var workingAbilityCategoryId = $(this).closest("li").attr("id");
+      if($(this).parent("li").next("ul").length == 0){
+        $(this).attr('src','/icon/folder-open.png');
+        buildTreeThisNodeNextLevel(workingAbilityCategoryId);
+      }else{   
+        changeTreeUlshowAndHiden($(this));
+      }
+      changeTreeWordingWeightBolder($(this).next('span'));
+      buildRightContentCard(workingAbilityCategoryId);
+      showWorkingAbilityCategoryTitle(workingAbilityCategoryId);
+      $('#currentWorkingAbilityCategoryId').val(workingAbilityCategoryId);        
+    }  
   });
 
   function changeTreeUlshowAndHiden(clickImg){ 
@@ -50,10 +54,10 @@ $(document).ready(function(){
   }
 
   
-  function buildTreeOneNodeNextLevel(workingAbilityCategoryId){
+  function buildTreeThisNodeNextLevel(workingAbilityCategoryId){
     $.ajax({
       type:'GET',
-      url:'/workingAbilityTreeOneNodeNextLevel',
+      url:'/workingAbilityTreeThisNodeNextLevel',
       data: {workingAbilityCategoryId:workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
       success:function(result){
         if(workingAbilityCategoryId==0){// first level of Tree view
@@ -63,7 +67,7 @@ $(document).ready(function(){
         }
       },
       error:function(){
-        console.log("workingAbilityTreeOneNodeNextLevel error ");
+        console.log("workingAbilityTreeThisNodeNextLevel error ");
       }
     });
   }
@@ -87,21 +91,19 @@ $(document).ready(function(){
 });
 
 function showWorkingAbilityCategoryTitle(workingAbilityCategoryId){
-    $.ajax({
-      type:'GET',
-      url:'/WorkingAbilityCategoryTitle',
-      data: {workingAbilityCategoryId : workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
-      success:function(result){
-        $("#WorkingAbilityCategoryTitle").html(result);
-        $("#WorkingAbilityCategoryTitleInNewModel").html(result);
-        //$("#WorkingAbilityCategoryTitleInEditModel").html(result); //有多個 Modal
-      },
-      error:function(){
-        console.log("WorkingAbilityCategoryTitle error");
-      }
-
-    });
-  }
+  $.ajax({
+    type:'GET',
+    url:'/WorkingAbilityCategoryTitle',
+    data: {workingAbilityCategoryId : workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
+    success:function(result){
+      $("#WorkingAbilityCategoryTitle").html(result);
+      $("#WorkingAbilityCategoryTitleInNewModel").html(result);
+    },
+    error:function(){
+      console.log("WorkingAbilityCategoryTitle error");
+    }
+   });
+}
   
 
 function newWorkingAbilityAndReloadRightContentCard(){
@@ -195,7 +197,8 @@ function deleteWorkingAbilityAndReloadRightContentCard(workingAbilityId){
 <div class="row" style="margin-top:20px">
   <div class="col-4">    
     <h2>選擇能力分類</h2>
-    <div id="workingAbilityLeftTree" class="list-group list-group-flush" style="margin-top:20px"></div>
+    <div id="workingAbilityLeftTree" class="list-group list-group-flush" style="margin-top:20px">
+    </div>
   </div>
 
   <div id="workingAbilityRightContent" class="col-8">  

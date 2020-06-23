@@ -39,25 +39,55 @@ class workingAbilityController extends Controller
         return $this->buildWorkingAbilityRightContentCard($request->currentWorkingAbilityCategoryId);    
     }
 
-    public function showWorkingAbilityCategory_TreeViewOneNodeNextLevel(Request $request){
-        return $this -> buildWorkingAbilityCategory_TreeViewOneLevel($request->workingAbilityCategoryId);
+    public function buildWorkingAbilityCategoryTree_ThisNodeNextLevel(Request $request){
+        $workingAbilityCategoryParentId = $request->workingAbilityCategoryId;
+        $workingAbilityTreeViewHtml = "";
+        $isInitTreeNode = 0;
+        if($workingAbilityCategoryParentId == $isInitTreeNode){
+            $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml
+                ."<ul>"
+                    ."<li id='0' class='list-group-item'>"
+                        ."<img id='folder_icon' class='rounded' src='/icon/folder-open.png' alt='profile Pic'>"
+                        ."<span id='folder_span'>總目錄</span>"          
+                    ."</li>";
+        }        
+        $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml."<ul>"; 
+        $workingAbilityTreeViewHtml = $this->buildWorkingAbilityCategoryAllFloderNodesHtmlInTree($workingAbilityTreeViewHtml,$workingAbilityCategoryParentId);
+        $workingAbilityTreeViewHtml = $this->buildWorkingAbilityAllSkillNodesHtmlInTree($workingAbilityTreeViewHtml,$workingAbilityCategoryParentId);
+        $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml."</ul>";
+        if($workingAbilityCategoryParentId == $isInitTreeNode){
+            $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml."</ul>";
+        }
+        return $workingAbilityTreeViewHtml;
     }
 
-    public function buildWorkingAbilityCategory_TreeViewOneLevel(int $parentId){
-        $db = new workingAbilityCategory();
-        $workingAbilityCategoriesFromDB = $db -> findAllChildNodeByParentIdInTreeView($parentId);
-        $workingAbilityTreeViewHtml = "<ul>";
-            
-        foreach($workingAbilityCategoriesFromDB as $workingAbilityCategory){
-            $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml
-            ."<li id='".$workingAbilityCategory -> id ."' class='list-group-item'>"
-                ."<img id='tree_icon' class='rounded' src='/icon/folder-close.png' alt='profile Pic'>  "
-                ."<span >".$workingAbilityCategory -> name ."</span>"
-            ."</li>";
+    function buildWorkingAbilityCategoryAllFloderNodesHtmlInTree($workingAbilityTreeViewHtml,int $workingAbilityCategoryParentId){
+        $workingAbilityCategoryDB = new workingAbilityCategory();
+        $workingAbilityCategoriesFromDB = $workingAbilityCategoryDB -> findAllChildNodeByParentIdInTreeView($workingAbilityCategoryParentId);      
+        if($workingAbilityCategoriesFromDB->count()>0){            
+            foreach($workingAbilityCategoriesFromDB as $workingAbilityCategory){
+                $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml
+                ."<li id='".$workingAbilityCategory->id ."' class='list-group-item'>"
+                    ."<img id='folder_icon' class='rounded' src='/icon/folder-close.png' alt='profile Pic'>  "
+                    ."<span id='folder_span' >".$workingAbilityCategory->name ."</span>"
+                ."</li>";
+            }
         }
+        return $workingAbilityTreeViewHtml;
+    }
 
-        $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml."</ul>";
-
+    function buildWorkingAbilityAllSkillNodesHtmlInTree($workingAbilityTreeViewHtml,int $workingAbilityCategoryParentId){        
+        $workingAbilityDB = new workingAbility();
+        $workingAbilitiesFromDB = $workingAbilityDB->findWorkingAbilityInfoByCategoryId($workingAbilityCategoryParentId);
+        if($workingAbilitiesFromDB->count()>0){
+            foreach($workingAbilitiesFromDB as $workingAbility){
+                $workingAbilityTreeViewHtml = $workingAbilityTreeViewHtml
+                ."<li id='workingAbility_".$workingAbility->id ."' class='list-group-item'>"
+                    ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>  "
+                    ."<span >".$workingAbility->name ."</span>"
+                ."</li>";
+            }
+        }
         return $workingAbilityTreeViewHtml;
     }
 
@@ -99,7 +129,6 @@ class workingAbilityController extends Controller
                         ."<h5 class='modal-title' id='editModalLabel'>修改工作能力:".$workingAbilityInfo->name."</h5>"
                     ."</div>"
                     ."<div class='modal-body'>"
-                        //."分類:<span id='WorkingAbilityCategoryTitleInEditModel_".$workingAbilityInfo->id."'></span>"
                         ."<div class='form-group'>"
                             ."<label class='col-form-label'>能力名稱:</label>"
                             ."<input type='text' class='form-control'  value='".$workingAbilityInfo->name."' id='updateWorkingAbilityName_".$workingAbilityInfo->id."' name='updateWorkingAbilityName_".$workingAbilityInfo->id."'>"
@@ -119,7 +148,10 @@ class workingAbilityController extends Controller
 
     public function showWorkingAbilityCategoryTitle(Request $request){
         $db = new workingAbilityCategory();
-        $workingAbilityCategoriesFromDB = $db -> findWorkingAbilityCategoryById($request -> workingAbilityCategoryId);
+        $workingAbilityCategoryId = $request->workingAbilityCategoryId;
+        $isInitTreeNode = 0;
+        if($workingAbilityCategoryId == $isInitTreeNode) return "總目錄";
+        $workingAbilityCategoriesFromDB = $db -> findWorkingAbilityCategoryById($request->workingAbilityCategoryId);
         return $workingAbilityCategoriesFromDB -> name;
     }
 }

@@ -28,6 +28,6 @@ Route::post('/workingAbility','workingAbilityController@insertWorkingAbilityInDB
 Route::put('/workingAbility','workingAbilityController@updateWorkingAbilityInDBAndReload');
 Route::delete('/workingAbility','workingAbilityController@deleteWorkingAbilityInDBAndReload');
 
-Route::get('/workingAbilityTreeOneNodeNextLevel','workingAbilityController@showWorkingAbilityCategory_TreeViewOneNodeNextLevel');
+Route::get('/workingAbilityTreeThisNodeNextLevel','workingAbilityController@buildWorkingAbilityCategoryTree_ThisNodeNextLevel');
 Route::get('/workingAbilityContent','workingAbilityController@initalWorkingAbilityRightContentCard');
 Route::get('/WorkingAbilityCategoryTitle','workingAbilityController@showWorkingAbilityCategoryTitle');
