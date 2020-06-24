@@ -46,6 +46,11 @@ $(document).ready(function(){
     }  
   });
 
+});
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
   function changeTreeUlshowAndHiden(clickImg){ 
     if(clickImg.parent("li").next('ul').is(':hidden')){      
       clickImg.parent("li").next('ul').show("slow");
@@ -56,7 +61,7 @@ $(document).ready(function(){
     }
   }
 
-  function changeTreeWordingWeightBolder(clickSpan){    
+  function changeTreeWordingWeightBolder(clickSpan){   
     $("#workingAbilityLeftTree").find("span").removeClass("font-weight-bolder text-info h5");
     clickSpan.addClass("font-weight-bolder text-info h5");
   }  
@@ -66,6 +71,7 @@ $(document).ready(function(){
       type:'GET',
       url:'/workingAbilityContent',
       data: {workingAbilityCategoryId:workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
+      async : false,//同步呼叫，先執行內層 $.ajax({})
       success:function(result){
         $("#workingAbilityContentCard").html(result);
       },
@@ -75,18 +81,17 @@ $(document).ready(function(){
     });
   }
 
-});
-  
 function buildTreeThisNodeNextLevel(workingAbilityCategoryId){
     $.ajax({
       type:'GET',
       url:'/workingAbilityTreeThisNodeNextLevel',
       data: {workingAbilityCategoryId:workingAbilityCategoryId, "_token": "{{ csrf_token() }}"} ,//412
+      async : false,//同步呼叫，先執行內層 $.ajax({})
       success:function(result){
         if(workingAbilityCategoryId==0){// first level of Tree view
           $("#workingAbilityLeftTree").append(result);
         }else if(workingAbilityCategoryId>0){          
-          $("#"+workingAbilityCategoryId).after(result);        
+          $("#"+workingAbilityCategoryId).after(result);      
         }
       },
       error:function(){
@@ -145,7 +150,7 @@ function addWorkingAbilityCategory(){
       "_token": "{{ csrf_token() }}"
     },
     success:function(result){
-      console.log(result);
+      //console.log(result);
     },error:function(){
       console.log("addWorkingAbilityCategory error");
     }
@@ -156,7 +161,68 @@ function addWorkingAbilityCategory(){
     $('#'+currentWorkingAbilityCategoryId).next('ul').html('');
   buildTreeThisNodeNextLevel(currentWorkingAbilityCategoryId);  
 }
-  
+
+function buildDeleteWorkingAbilityCategoryModalInfo(){
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  if(currentWorkingAbilityCategoryId==0){
+    $('#deleteWorkingAbilityCategoryModalInfo').text('總目錄無法刪除!');
+  }else{
+    $('#deleteWorkingAbilityCategoryModalInfo').html(
+      '該分類刪除後，此分類下的能力與子分類會一併刪除!!<br>'+
+      '確定要刪除分類 : ' + $('#WorkingAbilityCategoryTitle').text() +' 嗎?'      
+    );
+  }
+}
+
+function deleteWorkingAbilityCategory(){
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  if(currentWorkingAbilityCategoryId!=0){
+    $.ajax({
+      type:'DELETE',
+      url:'/workingAbilityCategory',
+      data:{
+        currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
+        "_token": "{{ csrf_token() }}"
+      },
+      success:function(result){
+        console.log(result);
+      },error:function(){
+        console.log("addWorkingAbilityCategory error");
+      }
+    });
+    $('#'+currentWorkingAbilityCategoryId).next('ul').remove();
+    $('#'+currentWorkingAbilityCategoryId).remove();
+  }
+  backToParentLevelRightContentCard(currentWorkingAbilityCategoryId);
+}
+
+function backToParentLevelRightContentCard(currentWorkingAbilityCategoryId){
+  var parentId = getWorkingAbilityCategoryParentIdById(currentWorkingAbilityCategoryId);  
+  buildRightContentCard(parentId);
+  showWorkingAbilityCategoryTitle(parentId);
+  $("#workingAbilityLeftTree").find("span").removeClass("font-weight-bolder text-info h5");
+  $('#'+parentId).find('span').addClass("font-weight-bolder text-info h5");
+}
+
+function getWorkingAbilityCategoryParentIdById(currentWorkingAbilityCategoryId){
+  var parentId = 0;
+  $.ajax({
+    type:'GET',
+    url:'/workingAbilityCategoryBakeToParent',
+    data:{
+      currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
+      "_token": "{{ csrf_token() }}"
+    },
+    async : false,//同步呼叫，先執行內層 $.ajax({})
+    success:function(result){
+      parentId = result;
+    },
+    error:function(){
+      console.log("getWorkingAbilityCategoryParentIdById error1");
+    }
+  });
+  return parentId;
+}
 
 function newWorkingAbilityAndReloadRightContentCard(){
   var insertWorkingAbilityName = $("#insertWorkingAbilityName").val();
@@ -252,7 +318,27 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   <div class="col-11" >
     <button type='button' class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增能力分類</button>
     <button type='button' class='btn btn-info' >重新命名能力分類</button>
-    <button type='button' class='btn btn-danger' >刪除能力分類</button>
+    <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteWorkingAbilityCategoryModal' onclick='buildDeleteWorkingAbilityCategoryModalInfo()' >刪除能力分類</button>
+  </div>
+</div>
+
+<div class="modal" id="deleteWorkingAbilityCategoryModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">警告!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id='deleteWorkingAbilityCategoryModalInfo'>確定刪除該分類嗎?</p>
+      </div>
+      <div class="modal-footer">        
+        <button type='button' class='btn btn-danger' data-dismiss='modal'  onclick='deleteWorkingAbilityCategory()' >確定刪除</button>
+        <button type="button" class="btn btn-secondary"  data-dismiss="modal" >取消</button>
+      </div>
+    </div>
   </div>
 </div>
 

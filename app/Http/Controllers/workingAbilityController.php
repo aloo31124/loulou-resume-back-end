@@ -158,12 +158,23 @@ class workingAbilityController extends Controller
         return $workingAbilityCategoriesFromDB -> name;
     }
 
+    public function findWorkingAbilityCategoryParentIdById(Request $request){        
+        $db = new workingAbilityCategory();
+        $workingAbilityCategoriesFromDB = $db -> findWorkingAbilityCategoryById($request->currentWorkingAbilityCategoryId);
+        return $workingAbilityCategoriesFromDB->parent_id;
+    }
+
     public function insertWorkingAbilityCategoryInDB(Request $request){
-        error_log("addWorkingAbilityCategory");
         $db = new workingAbilityCategory();
         $db->name = $request->addWorkingAbilityCategoryName;
         $db->parent_id = $request->currentWorkingAbilityCategoryId;
         $db->sort = 0;        
         return $db->save();
+    }
+
+    public function deleteWorkingAbilityCategoryInDB(Request $request){
+        $db = workingAbilityCategory::find($request->currentWorkingAbilityCategoryId);
+        $db->is_delete = 1;
+        return $db->save();                
     }
 }

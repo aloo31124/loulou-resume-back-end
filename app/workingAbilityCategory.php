@@ -13,6 +13,7 @@ class workingAbilityCategory extends Model
     public function findAllChildNodeByParentIdInTreeView(int $parentId){
         return DB::table('working_ability_category')
         ->where('parent_id','=', $parentId )
+        ->where('is_delete','=',0)
         ->get();
     }
 
