@@ -172,6 +172,12 @@ class workingAbilityController extends Controller
         return $db->save();
     }
 
+    public function updateWorkingAbilityCategoryInDB(Request $request){        
+        $db = workingAbilityCategory::find($request->currentWorkingAbilityCategoryId);
+        $db->name = $request->editWorkingAbilityCategoryName;
+        return $db->save();
+    }
+
     public function deleteWorkingAbilityCategoryInDB(Request $request){
         $db = workingAbilityCategory::find($request->currentWorkingAbilityCategoryId);
         $db->is_delete = 1;

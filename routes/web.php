@@ -34,4 +34,5 @@ Route::get('/WorkingAbilityCategoryTitle','workingAbilityController@showWorkingA
 Route::get('/workingAbilityCategoryBakeToParent','workingAbilityController@findWorkingAbilityCategoryParentIdById');
 
 Route::post('/workingAbilityCategory','workingAbilityController@insertWorkingAbilityCategoryInDB');
+Route::put('/workingAbilityCategory','workingAbilityController@updateWorkingAbilityCategoryInDB');
 Route::delete('/workingAbilityCategory','workingAbilityController@deleteWorkingAbilityCategoryInDB');

@@ -18,6 +18,12 @@ $(document).ready(function(){
     ){
       cleanAddWorkingAbilityCategoryHtml();      
     }
+
+    if($(e).parents('#edit_category_item').length==0 && e.target.id != 'edit_category_item' 
+      && e.target.id != 'editWorkingAbilityBtn' && e.target.id != 'editWorkingAbilityCategoryName'
+    ){
+      cleanEditWorkingAbilityCategoryHtml();      
+    }
   });
    
   $("#workingAbilityLeftTree").on("click", "span" ,function(){
@@ -108,6 +114,7 @@ function showWorkingAbilityCategoryTitle(workingAbilityCategoryId){
     success:function(result){
       $("#WorkingAbilityCategoryTitle").html(result);
       $("#WorkingAbilityCategoryTitleInNewModel").html(result);
+      $("#"+workingAbilityCategoryId).find("span").text(result);
     },
     error:function(){
       console.log("WorkingAbilityCategoryTitle error");
@@ -172,6 +179,55 @@ function buildDeleteWorkingAbilityCategoryModalInfo(){
       '確定要刪除分類 : ' + $('#WorkingAbilityCategoryTitle').text() +' 嗎?'      
     );
   }
+}
+
+function buildEditWorkingAbilityCategoryHtml(){
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  var categoryName = $("#WorkingAbilityCategoryTitle").text(); 
+  cleanEditWorkingAbilityCategoryHtml();
+  if(currentWorkingAbilityCategoryId==0){
+    alert("無法修改總目錄名稱");
+  }else{
+    $("#"+currentWorkingAbilityCategoryId).find('span').replaceWith(
+        "<span  id='edit_category_item'>"
+      +   "<input type='text' class='form-control' value='"+categoryName+"' id='editWorkingAbilityCategoryName'>"
+      +   "<button type='button' class='btn btn-secondary' onclick='cleanEditWorkingAbilityCategoryHtml()' >取消</button>"
+      +   "<button type='button' class='btn btn-info' onclick='editWorkingAbilityCategory()' >儲存</button>"                
+      + "</span>"
+    );
+  }
+}
+
+function editWorkingAbilityCategory(){
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  var editWorkingAbilityCategoryName = $("#editWorkingAbilityCategoryName").val();  
+  $.ajax({
+    type:'PUT',
+    url:'/workingAbilityCategory',
+    data:{
+      currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
+      editWorkingAbilityCategoryName : editWorkingAbilityCategoryName,
+      "_token": "{{ csrf_token() }}"
+    },
+    success:function(result){
+      if(result==1){
+        if(currentWorkingAbilityCategoryId>0){
+          showWorkingAbilityCategoryTitle(currentWorkingAbilityCategoryId);
+        }
+      }
+    },error:function(){
+      console.log("editWorkingAbilityCategory error");
+    }
+  });  
+}
+
+function cleanEditWorkingAbilityCategoryHtml(){
+  var categoryName = $("#WorkingAbilityCategoryTitle").text(); 
+  var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
+  $('#edit_category_item').replaceWith(
+    "<span id='folder_span' >" + categoryName +  "</span>"
+  );
+  changeTreeWordingWeightBolder($("#"+currentWorkingAbilityCategoryId).find('span'));
 }
 
 function deleteWorkingAbilityCategory(){
@@ -317,7 +373,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 <div class="row" style="margin-top:20px">
   <div class="col-11" >
     <button type='button' class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增能力分類</button>
-    <button type='button' class='btn btn-info' >重新命名能力分類</button>
+    <button type='button' class='btn btn-info' id='editWorkingAbilityBtn' onclick='buildEditWorkingAbilityCategoryHtml()' >重新命名能力分類</button>
     <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteWorkingAbilityCategoryModal' onclick='buildDeleteWorkingAbilityCategoryModalInfo()' >刪除能力分類</button>
   </div>
 </div>
