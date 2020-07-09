@@ -14,7 +14,7 @@
         <a class="nav-link" href="/workingAbility">工作技能/能力</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/#">撰寫自傳</a>
+        <a class="nav-link" href="/autobiography">撰寫自傳</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/#">作品集</a>

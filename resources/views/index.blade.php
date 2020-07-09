@@ -38,7 +38,7 @@
         <div class="card-body">
             <h5 class="card-title">撰寫自傳</h5>
             <h6 class="card-subtitle mb-2 text-muted">撰寫與排版個人的自傳，介紹自己的經歷......。</h6>
-            <a href="#"  class="btn btn-info">前往功能</a>
+            <a href="/autobiography"  class="btn btn-info">前往功能</a>
         </div>
     </div>
 </div>

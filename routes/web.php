@@ -23,6 +23,8 @@ Route::post('/personalData','personalDataController@insertPesonalDataInDB');
 Route::delete('/personalData/delete/{personalData}','personalDataController@deletePesonalDataInDB');
 Route::put('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('/workingAbility','workingAbilityController@index');
 Route::post('/workingAbility','workingAbilityController@insertWorkingAbilityInDBAndReload');
 Route::put('/workingAbility','workingAbilityController@updateWorkingAbilityInDBAndReload');
@@ -36,3 +38,8 @@ Route::get('/workingAbilityCategoryBakeToParent','workingAbilityController@findW
 Route::post('/workingAbilityCategory','workingAbilityController@insertWorkingAbilityCategoryInDB');
 Route::put('/workingAbilityCategory','workingAbilityController@updateWorkingAbilityCategoryInDB');
 Route::delete('/workingAbilityCategory','workingAbilityController@deleteWorkingAbilityCategoryInDB');
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Route::get('/autobiography','autobiographyController@index');
+
+
