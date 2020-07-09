@@ -1,7 +1,7 @@
 @extends('layout.master.baseMaster')
 
 @section('content')
-<script src="//cdn.ckeditor.com/4.14.1/basic/ckeditor.js"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 
 
 test
