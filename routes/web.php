@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//個人資料
 Route::get('/personalData','personalDataController@index');
 Route::post('/personalData','personalDataController@insertPesonalDataInDB');
 Route::delete('/personalData/delete/{personalData}','personalDataController@deletePesonalDataInDB');
@@ -25,6 +27,7 @@ Route::put('/personalData/edit/{personalData}','personalDataController@updatePes
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//工作能力
 Route::get('/workingAbility','workingAbilityController@index');
 Route::post('/workingAbility','workingAbilityController@insertWorkingAbilityInDBAndReload');
 Route::put('/workingAbility','workingAbilityController@updateWorkingAbilityInDBAndReload');
@@ -38,8 +41,10 @@ Route::get('/workingAbilityCategoryBakeToParent','workingAbilityController@findW
 Route::post('/workingAbilityCategory','workingAbilityController@insertWorkingAbilityCategoryInDB');
 Route::put('/workingAbilityCategory','workingAbilityController@updateWorkingAbilityCategoryInDB');
 Route::delete('/workingAbilityCategory','workingAbilityController@deleteWorkingAbilityCategoryInDB');
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//撰寫自傳
 Route::get('/autobiography','autobiographyController@index');
+Route::post('/autobiography','autobiographyController@insertAutobiographyChanpterInDB');
 
 
