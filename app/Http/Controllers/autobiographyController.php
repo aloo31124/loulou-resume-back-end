@@ -8,7 +8,11 @@ use App\autobiography;
 class autobiographyController extends Controller
 {
     function index(){
-        return view("autobiographyIndex");
+        $db =new autobiography();
+        $autobiographyAllChapters = $db->getAutogiographyAllChapterBySort();
+        return view("autobiographyIndex",
+            [ "autobiographyAllChapters" => $autobiographyAllChapters ]
+        );
     }
 
     function insertAutobiographyChanpterInDB(Request $request){

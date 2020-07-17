@@ -69,5 +69,12 @@ function submitAddChapterTextArea(){
 <input type='hidden' id='IsAddChapterTextAreaOpen' value='false' >
 <div id='addChapterTextArea' class='form-group' style='margin-top:20px'></div>
 
+@foreach($autobiographyAllChapters as $autobiographyAllChapter )
+<hr />
+<h1>{{ $autobiographyAllChapter->title}}</h2>
+<spane>{!! $autobiographyAllChapter->content !!} </span>
+
+@endforeach
+<hr />
 
 @endsection

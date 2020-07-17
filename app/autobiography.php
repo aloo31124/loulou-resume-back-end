@@ -10,6 +10,12 @@ class autobiography extends Model
 {
     protected $table = 'autobiography'; 
 
+    public function getAutogiographyAllChapterBySort(){
+        return DB::table("autobiography")
+                ->orderBy("sort")
+                ->get();
+    }
+
     public function findMaxSort(){   
         return DB::table("autobiography")
                 ->select("sort")
