@@ -68,8 +68,41 @@ function submitAddChapterTextArea(){
 
 @foreach($autobiographyAllChapters as $autobiographyAllChapter )
 <hr />
-<h1>{{ $autobiographyAllChapter->title}}</h2>
+<div class="row form-inline" >
+    <h1>{{ $autobiographyAllChapter->title}}</h2>
+    &nbsp;&nbsp;&nbsp;
+    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#editChapterModal_{{$autobiographyAllChapter->id}}" >編輯</button>     
+</div>
 <spane>{!! $autobiographyAllChapter->content !!} </span>
+
+    <!-- 編輯章節 Modal 視窗 start -->
+    <div class="modal fade bd-example-modal-xl" id="editChapterModal_{{$autobiographyAllChapter->id}}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"  >
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">編輯章節</h5>
+                </div>            
+                <div class="modal-body">
+                    <div class='input-group mb-3'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' >章節名稱</span>
+                        </div>
+                        <input type='text' class='form-control' placeholder='請輸入新增章節名稱' id='CKEditorTitle_{{$autobiographyAllChapter->id}}' value='{{ $autobiographyAllChapter->title}}'>
+                    </div>
+                    <textarea class='form-control' id='CKEditor_{{$autobiographyAllChapter->id}}' ></textarea>
+                    <script>
+                        CKEDITOR.replace( 'CKEditor_{{$autobiographyAllChapter->id}}' );
+                        CKEDITOR.instances.CKEditor_{{$autobiographyAllChapter->id}}.setData( "{!!$autobiographyAllChapter->content!!}" ) ;
+                    </script>
+                </div>
+                <div class="modal-footer">
+                    <button type='button' class='btn btn-danger' data-dismiss="modal" onclick='' >取消</button>
+                    <button type='button' class='btn btn-info' data-dismiss="modal" onclick='' >儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 編輯章節 Modal 視窗 end -->
 
 @endforeach
 <hr />
