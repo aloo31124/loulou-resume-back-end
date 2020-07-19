@@ -28,6 +28,30 @@ function submitAddChapterTextArea(){
 
 }
 
+function submitEditChapterTextArea(id){
+    var CKEditorContent = eval("CKEDITOR.instances.CKEditor_" + id + ".getData()");
+    var CKEditorTitle = $("#CKEditorTitle_"+id).val();
+    
+    $.ajax({
+        type:'PUT',
+        url:'/autobiography',
+        data:{
+            id : id,
+            autobiographyContent : CKEditorContent,
+            autobiographyTitle : CKEditorTitle,
+            "_token": "{{ csrf_token() }}"
+        },
+        success:function(result){
+            if(result!=1){
+                console.log("submitEditChapterTextArea not success");
+            }
+            location.reload();
+        },error:function(){
+            console.log("submitEditChapterTextArea error");
+        }
+    });
+}
+
 </script>
 
 <h2 style="margin-top:20px">撰寫自傳</h2>
@@ -96,8 +120,8 @@ function submitAddChapterTextArea(){
                     </script>
                 </div>
                 <div class="modal-footer">
-                    <button type='button' class='btn btn-danger' data-dismiss="modal" onclick='' >取消</button>
-                    <button type='button' class='btn btn-info' data-dismiss="modal" onclick='' >儲存</button>
+                    <button type='button' class='btn btn-danger' data-dismiss="modal" onclick='' >關閉</button>
+                    <button type='button' class='btn btn-info' data-dismiss="modal" onclick='submitEditChapterTextArea( {{$autobiographyAllChapter->id}} )' >儲存</button>
                 </div>
             </div>
         </div>

@@ -23,4 +23,11 @@ class autobiographyController extends Controller
         $db->is_show=true;
         return $db->save();        
     }
+
+    function updateAutobiographyChanpterInDB(Request $request){
+        $db = autobiography::find($request->id);
+        $db->title = $request->autobiographyTitle;
+        $db->content = $request->autobiographyContent;
+        return $db->save();   
+    }
 }

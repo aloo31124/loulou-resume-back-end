@@ -46,5 +46,6 @@ Route::delete('/workingAbilityCategory','workingAbilityController@deleteWorkingA
 //撰寫自傳
 Route::get('/autobiography','autobiographyController@index');
 Route::post('/autobiography','autobiographyController@insertAutobiographyChanpterInDB');
+Route::put('/autobiography','autobiographyController@updateAutobiographyChanpterInDB');
 
 
