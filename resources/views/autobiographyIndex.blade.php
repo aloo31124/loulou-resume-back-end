@@ -71,6 +71,26 @@ function deleteChapterTextArea(id){
     });
 }
 
+function changeChapterSort(MovingDirection,id){
+    $.ajax({
+        type:'PUT',
+        url:'/autobiographyChangeSort',
+        data:{
+            id : id,
+            MovingDirection : MovingDirection,
+            "_token": "{{ csrf_token() }}"
+        },
+        success:function(result){
+            if(result!=1){
+                console.log("deleteChapterTextArea not success");
+            }
+            location.reload();
+        },error:function(){
+            console.log("deleteChapterTextArea error");
+        }
+    });
+}
+
 </script>
 
 <h2 style="margin-top:20px">撰寫自傳</h2>
@@ -117,6 +137,10 @@ function deleteChapterTextArea(id){
     <button type='button' class='btn btn-info' data-toggle="modal" data-target="#editChapterModal_{{$autobiographyAllChapter->id}}" >編輯</button>
     &nbsp;&nbsp;&nbsp;
     <button type='button' class='btn btn-danger' data-toggle="modal" data-target="#deleteChapterModal_{{$autobiographyAllChapter->id}}" >刪除</button>
+    &nbsp;&nbsp;&nbsp;
+    <button type='button' class='btn btn-success' onclick="changeChapterSort('up',{{$autobiographyAllChapter->id}})" >上移</button>
+    &nbsp;&nbsp;&nbsp;
+    <button type='button' class='btn btn-success' onclick="changeChapterSort('down',{{$autobiographyAllChapter->id}})" >下移</button>
 </div>
 <spane>{!! $autobiographyAllChapter->content !!} </span>
 

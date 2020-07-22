@@ -37,4 +37,9 @@ class autobiographyController extends Controller
         $deleteChapter->delete();
         return $db->reorganizeSort();
     }
+
+    function changeChapterSortInDB(Request $request){
+        $db = new autobiography();
+        return $db->changeSort($request->MovingDirection , $request->id);
+    }
 }

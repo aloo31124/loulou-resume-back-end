@@ -48,5 +48,5 @@ Route::get('/autobiography','autobiographyController@index');
 Route::post('/autobiography','autobiographyController@insertAutobiographyChanpterInDB');
 Route::put('/autobiography','autobiographyController@updateAutobiographyChanpterInDB');
 Route::delete('/autobiography','autobiographyController@deleteAutobiographyChanpterInDB');
-
+Route::put('/autobiographyChangeSort','autobiographyController@changeChapterSortInDB');
 
