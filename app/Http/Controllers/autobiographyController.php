@@ -30,4 +30,11 @@ class autobiographyController extends Controller
         $db->content = $request->autobiographyContent;
         return $db->save();   
     }
+
+    function deleteAutobiographyChanpterInDB(Request $request){
+        $db = new autobiography();
+        $deleteChapter = autobiography::find($request->id);        
+        $deleteChapter->delete();
+        return $db->reorganizeSort();
+    }
 }

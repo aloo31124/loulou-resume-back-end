@@ -52,6 +52,25 @@ function submitEditChapterTextArea(id){
     });
 }
 
+function deleteChapterTextArea(id){
+    $.ajax({
+        type:'DELETE',
+        url:'/autobiography',
+        data:{
+            id : id,
+            "_token": "{{ csrf_token() }}"
+        },
+        success:function(result){
+            if(result!=1){
+                console.log("deleteChapterTextArea not success");
+            }
+            location.reload();
+        },error:function(){
+            console.log("deleteChapterTextArea error");
+        }
+    });
+}
+
 </script>
 
 <h2 style="margin-top:20px">撰寫自傳</h2>
@@ -95,7 +114,9 @@ function submitEditChapterTextArea(id){
 <div class="row form-inline" >
     <h1>{{ $autobiographyAllChapter->title}}</h2>
     &nbsp;&nbsp;&nbsp;
-    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#editChapterModal_{{$autobiographyAllChapter->id}}" >編輯</button>     
+    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#editChapterModal_{{$autobiographyAllChapter->id}}" >編輯</button>
+    &nbsp;&nbsp;&nbsp;
+    <button type='button' class='btn btn-danger' data-toggle="modal" data-target="#deleteChapterModal_{{$autobiographyAllChapter->id}}" >刪除</button>
 </div>
 <spane>{!! $autobiographyAllChapter->content !!} </span>
 
@@ -127,6 +148,28 @@ function submitEditChapterTextArea(id){
         </div>
     </div>
     <!-- 編輯章節 Modal 視窗 end -->
+
+    <!-- 刪除章節 Modal 視窗 start -->
+    <div class="modal" id="deleteChapterModal_{{$autobiographyAllChapter->id}}" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">警告!!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>刪除後將無法復原！確定刪除:"{{ $autobiographyAllChapter->title}}" 的章節嗎?</p>
+            </div>
+            <div class="modal-footer">        
+                <button type='button' class='btn btn-danger' data-dismiss='modal'  onclick='deleteChapterTextArea( {{$autobiographyAllChapter->id}} )' >確定刪除</button>
+                <button type="button" class="btn btn-secondary"  data-dismiss="modal" >取消</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- 刪除章節 Modal 視窗 end -->
 
 @endforeach
 <hr />
