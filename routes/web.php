@@ -50,3 +50,5 @@ Route::put('/autobiography','autobiographyController@updateAutobiographyChanpter
 Route::delete('/autobiography','autobiographyController@deleteAutobiographyChanpterInDB');
 Route::put('/autobiographyChangeSort','autobiographyController@changeChapterSortInDB');
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//作品集
