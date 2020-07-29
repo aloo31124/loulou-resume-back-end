@@ -53,3 +53,6 @@ Route::put('/autobiographyChangeSort','autobiographyController@changeChapterSort
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //作品集
 Route::get('/portfolio','portfolioController@index');
+
+//初始左樹選單
+Route::get('/portfolioTreeMenuThisNodeBuildNextLevel','portfolioController@buildNextLevelByThisNodeCategoryForTreeMenu');
