@@ -52,7 +52,9 @@ Route::put('/autobiographyChangeSort','autobiographyController@changeChapterSort
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //作品集
-Route::get('/portfolio','portfolioController@index');
 
+Route::get('/portfolio','portfolioController@index');
 //初始左樹選單，或滑鼠點擊產生下一層
 Route::get('/portfolioTreeMenuThisNodeBuildNextLevel','portfolioController@buildNextLevelByThisNodeCategoryForTreeMenu');
+//點選左樹選單後，產生右內容頁
+Route::get('/portfolioRightContentBuild','portfolioController@buildRightContent');

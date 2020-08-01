@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\portfolioCategory;
+use App\portfolio;
 
 class portfolioController extends Controller
 {
@@ -57,5 +58,32 @@ class portfolioController extends Controller
             $TreeMenuHtml = $TreeMenuHtml."</ul>";
         }
         return $TreeMenuHtml;
+    }
+
+    function buildRightContent(Request $request){
+        $db = new portfolio();
+        $portfolioInfoFromDB = $db -> findportfolioInfoByCategoryId($request->ThisNodeCategoryId);
+        $RightContentHtml = "";
+        
+        $cardCount = 1;
+        $cardNumInRow = 2;
+        foreach($portfolioInfoFromDB as $portfolio){
+            if($cardCount%$cardNumInRow==1  ) $RightContentHtml = $RightContentHtml."<div class='row col-12' style='margin-top:20px'>";
+            $RightContentHtml = $RightContentHtml
+            ."<div class='card col-md-12 col-md-12 col-12'>"
+                ."<div class='card-body'>"
+                    ."<h5 class='card-title'>"
+                        ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
+                        .$portfolio->name 
+                    ."</h5>"            
+                    ."<p class='card-text'>".$portfolio->discription ."</p>"
+                    ."<input type='submit' value='編輯' class='btn btn-info' data-toggle='modal' data-target='#editWorkingAbilityModal_".$portfolio->id."' >"
+                    ."<input type='button' value='刪除' class='btn btn-danger' onclick='deleteWorkingAbilityAndReloadRightContentCard(".$portfolio->id.")' >"
+                ."</div>"
+            ."</div>";
+            if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml."</div>";            
+            $cardCount ++;
+        }        
+        return $RightContentHtml;
     }
 }
