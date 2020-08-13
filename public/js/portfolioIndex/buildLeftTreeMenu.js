@@ -62,8 +62,5 @@ $(document).ready(function(){
     clickSpan.addClass("font-weight-bolder text-info h5");
   }
 
-  
-function reloadNextLevelByThisNodeForTreeMenu(categoryId){  
-  $('#'+categoryId).next('ul').html('');
-  buildNextLevelByThisNodeIdForTreeMenu(categoryId);  
-}  
+ 
+

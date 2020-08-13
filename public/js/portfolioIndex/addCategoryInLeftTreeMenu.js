@@ -52,3 +52,8 @@ function addCategoryAjaxAndReloadTree(){
     });
     reloadNextLevelByThisNodeForTreeMenu(categoryId);
 }
+
+function reloadNextLevelByThisNodeForTreeMenu(categoryId){  
+  $('#'+categoryId).next('ul').html('');
+  buildNextLevelByThisNodeIdForTreeMenu(categoryId);  
+}  
