@@ -58,3 +58,5 @@ Route::get('/portfolio','portfolioController@index');
 Route::get('/portfolioTreeMenuThisNodeBuildNextLevel','portfolioController@buildNextLevelByThisNodeCategoryForTreeMenu');
 //點選左樹選單後，產生右內容頁
 Route::get('/portfolioRightContentBuild','portfolioController@buildRightContent');
+
+Route::get('/portfolioCategoryAdd','portfolioController@insertCategoryInDB');

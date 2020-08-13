@@ -11,6 +11,9 @@ class portfolioController extends Controller
     public function index(){     
         return view("portfolioIndex");
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // 產生左樹選單
     
     public function buildNextLevelByThisNodeCategoryForTreeMenu(Request $request){
         $categoryParentId = $request->ThisNodeCategoryId;
@@ -36,19 +39,18 @@ class portfolioController extends Controller
 
     function buildHtmlEachChildNodesFromDB_ByParentId($TreeMenuHtml,int $categoryParentId){        
         $db = new portfolioCategory();
-        $portfolioCategoriesFromDB = $db->findAllChildNodesByParentId($categoryParentId); 
+        $portfolioCategoriesFromDB = $db->findAllChildNodesByParentId($categoryParentId);
         
-        if($portfolioCategoriesFromDB->count()>0){            
-            $TreeMenuHtml = $TreeMenuHtml."<ul>"; 
-            foreach($portfolioCategoriesFromDB as $portfolioCategory){
-                $TreeMenuHtml = $TreeMenuHtml
-                ."<li id='".$portfolioCategory->id ."' class='list-group-item'>"
-                    ."<img id='folder_icon' class='rounded' src='/icon/folder-close.png' alt='profile Pic'>  "
-                    ."<span id='folder_span' >".$portfolioCategory->name ."</span>"
-                ."</li>";
-            }
-            $TreeMenuHtml = $TreeMenuHtml."</ul>";
-        }        
+        $TreeMenuHtml = $TreeMenuHtml."<ul>"; 
+        foreach($portfolioCategoriesFromDB as $portfolioCategory){
+            $TreeMenuHtml = $TreeMenuHtml
+            ."<li id='".$portfolioCategory->id ."' class='list-group-item'>"
+                ."<img id='folder_icon' class='rounded' src='/icon/folder-close.png' alt='profile Pic'>  "
+                ."<span id='folder_span' >".$portfolioCategory->name ."</span>"
+            ."</li>";
+        }
+        $TreeMenuHtml = $TreeMenuHtml."</ul>";
+                
         return $TreeMenuHtml;
     }
 
@@ -59,6 +61,19 @@ class portfolioController extends Controller
         }
         return $TreeMenuHtml;
     }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //左樹選單
+
+    public function insertCategoryInDB(Request $request){
+        $db = new portfolioCategory();
+        $db->name = $request->categoryName;
+        $db->parent_id = $request->categoryId;
+        $db->sort = 0;        
+        return $db->save();
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function buildRightContent(Request $request){
         $db = new portfolio();
@@ -70,7 +85,7 @@ class portfolioController extends Controller
         foreach($portfolioInfoFromDB as $portfolio){
             if($cardCount%$cardNumInRow==1  ) $RightContentHtml = $RightContentHtml."<div class='row col-12' style='margin-top:20px'>";
             $RightContentHtml = $RightContentHtml
-            ."<div class='card col-md-12 col-md-12 col-12'>"
+            ."<div class='card col-md-12 col-12'>"
                 ."<div class='card-body'>"
                     ."<h5 class='card-title'>"
                         ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
@@ -83,7 +98,7 @@ class portfolioController extends Controller
             ."</div>";
             if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml."</div>";            
             $cardCount ++;
-        }        
+        }    
         return $RightContentHtml;
     }
 }
