@@ -72,7 +72,24 @@ class portfolioController extends Controller
         $db->sort = 0;        
         return $db->save();
     }
-    
+
+    public function updateCategoryInDB(Request $request){       
+        $db = portfolioCategory::find($request->categoryId);
+        $db->name = $request->categoryName;
+        return $db->save();
+    }
+
+    public function deleteCategoryInDB(Request $request){
+        $db = portfolioCategory::find($request->categoryId);
+        $db->is_delete = 1;
+        return $db->save();                
+    }
+
+    public function findCategoryParentIdById(Request $request){        
+        $db = portfolioCategory::find($request->categoryId);
+        return $db->parent_id;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function buildRightContent(Request $request){

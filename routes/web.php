@@ -60,3 +60,6 @@ Route::get('/portfolioTreeMenuThisNodeBuildNextLevel','portfolioController@build
 Route::get('/portfolioRightContentBuild','portfolioController@buildRightContent');
 
 Route::get('/portfolioCategoryAdd','portfolioController@insertCategoryInDB');
+Route::get('/portfolioCategoryEdit','portfolioController@updateCategoryInDB');
+Route::get('/portfolioCategoryDelete','portfolioController@deleteCategoryInDB');
+Route::get('/portfolioCategoryGetParentId','portfolioController@findCategoryParentIdById');
