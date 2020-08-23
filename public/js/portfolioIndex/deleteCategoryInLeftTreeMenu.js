@@ -26,15 +26,18 @@ function buildDeleteCategoryModalInfo(){
           "_token": "{{ csrf_token() }}"
         },
         success:function(result){
-          console.log("result: " + result);
+          if(result==1){            
+            $('#'+categoryId).next('ul').remove();
+            $('#'+categoryId).remove();
+            backToParentCategory(categoryId);
+          }else{
+            alert("刪除失敗");
+          }
         },error:function(){
           console.log("deleteCategoryAjaxAndReloadTree error");
         }
       });
-      $('#'+categoryId).next('ul').remove();
-      $('#'+categoryId).remove();
-    }
-    backToParentCategory(categoryId);
+    }    
   }
 
 function backToParentCategory(categoryId){
