@@ -6,6 +6,7 @@
 <script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/addCategoryInLeftTreeMenu.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/editeCategoryInLeftTreeMenu.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/deleteCategoryInLeftTreeMenu.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/addPortfolio.js') }}"></script>
 
 
 <script>
@@ -13,7 +14,7 @@ function buildRightContentCard(ThisNodeCategoryId){
   $.ajax({
     type:'GET',
     url:'/portfolioRightContentBuild',
-    data: {ThisNodeCategoryId:ThisNodeCategoryId,
+    data: {currentCategoryId:ThisNodeCategoryId,
        "_token": "{{ csrf_token() }}"
     },    
     async : false,
@@ -67,6 +68,34 @@ function buildRightContentCard(ThisNodeCategoryId){
 
   <div class="col-8">  
     <h2>作品分類:<span id='RightContentTitle'></span></h2>    
+    <button type='button' class='btn btn-info' data-toggle="modal" onclick="buildAddPortfolioModalInfo()" data-target="#addPortfolioModal" >新增作品</button>    
+
+    <!--新增作品 Modal start-->
+    <div class="modal fade " id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog  modal-lg" role="document">          
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">新增作品</h5>
+            </div>            
+            <div class="modal-body">        
+              作品分類:<span id='addPortfolioForCategory'></span>              
+              <div class="form-group">
+                <label class="col-form-label">作品名稱:</label>
+                <input type="text" class="form-control"  value="" id="insertPortfolioName" name="insertPortfolioName">              
+                <label class="col-form-label">作品說明:</label>
+                <input type="text" class="form-control"  value="" id="insertPortfolioDiscription"  name="insertPortfolioDiscription">                      
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cleanAddPortfolioModal()" >取消</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal" onclick="addPortfolioAndReloadRightContentCard()" >儲存</button>                                       
+            </div>
+          </div>        
+      </div>
+    </div>
+    <!--新增作品 Modal end-->
+
     <div id="RightContent" class="card-deck" style="margin-top:20px" ></div>
   </div>
 </div>

@@ -91,10 +91,21 @@ class portfolioController extends Controller
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    public function insertPortfolioInDBAndReload(Request $reqeust){
+        $db = new portfolio();
+        $db->name = $reqeust->insertPortfolioName;        
+        $db->discription = $reqeust->insertPortfolioDiscription;        
+        $db->portfolio_category_id = $reqeust->currentCategoryId;        
+        $db->sort = 0;                
+        $db->save();                
+        return $this->buildRightContent($reqeust);
+    }
 
     function buildRightContent(Request $request){
         $db = new portfolio();
-        $portfolioInfoFromDB = $db -> findportfolioInfoByCategoryId($request->ThisNodeCategoryId);
+        $portfolioInfoFromDB = $db -> findportfolioInfoByCategoryId($request->currentCategoryId);
         $RightContentHtml = "";
         
         $cardCount = 1;
