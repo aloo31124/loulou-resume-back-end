@@ -103,6 +103,16 @@ class portfolioController extends Controller
         return $this->buildRightContent($reqeust);
     }
 
+    public function updatePortfolioInDBAndReload(Request $reqeust){
+        $db = portfolio::find($reqeust->portfolioId);
+        $db->name = $reqeust->updatePortfolioName;         
+        $db->discription = $reqeust->updatePortfolioDiscription;        
+        $db->portfolio_category_id = $reqeust->currentCategoryId;                             
+        $db->sort = 0;
+        $db->save();  
+        return $this->buildRightContent($reqeust);
+    }
+
     function buildRightContent(Request $request){
         $db = new portfolio();
         $portfolioInfoFromDB = $db -> findportfolioInfoByCategoryId($request->currentCategoryId);
@@ -115,18 +125,45 @@ class portfolioController extends Controller
             $RightContentHtml = $RightContentHtml
             ."<div class='card col-md-12 col-12'>"
                 ."<div class='card-body'>"
-                    ."<h5 class='card-title'>"
+                    ."<h5 class='card-title' id='portfolio_name_".$portfolio->id."'>"
                         ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
                         .$portfolio->name 
                     ."</h5>"            
-                    ."<p class='card-text'>".$portfolio->discription ."</p>"
-                    ."<input type='submit' value='編輯' class='btn btn-info' data-toggle='modal' data-target='#editWorkingAbilityModal_".$portfolio->id."' >"
-                    ."<input type='button' value='刪除' class='btn btn-danger' onclick='deleteWorkingAbilityAndReloadRightContentCard(".$portfolio->id.")' >"
+                    ."<p class='card-text' id='portfolio_discription_".$portfolio->id."'>".$portfolio->discription ."</p>"
+                    ."<input type='submit' value='編輯' class='btn btn-info' data-toggle='modal' data-target='#editPortfolioModal_".$portfolio->id."' >"
+                    ."<input type='button' value='刪除' class='btn btn-danger' onclick='deletePortfolioAndReload(".$portfolio->id.")' >"
                 ."</div>"
             ."</div>";
-            if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml."</div>";            
+            if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml."</div>"; 
+            $RightContentHtml = $this->buildPortfolioEditModalHtml($RightContentHtml,$request->currentCategoryId,$portfolio);           
             $cardCount ++;
         }    
+        return $RightContentHtml;
+    }
+
+    public function buildPortfolioEditModalHtml(String $RightContentHtml,int $categoryId,  $portfolio){
+        $RightContentHtml = $RightContentHtml
+        ."<div class='modal fade' id='editPortfolioModal_".$portfolio->id."' tabindex='-1' role='dialog' aria-labelledby='editModalLabel' aria-hidden='true' data-backdrop='static'>"
+            ."<div class='modal-dialog  modal-lg' role='document'>"
+                ."<div class='modal-content'>"
+                    ."<div class='modal-header'>"
+                        ."<h5 class='modal-title' id='editModalLabel'>修改作品:".$portfolio->name."</h5>"
+                    ."</div>"
+                    ."<div class='modal-body'>"
+                        ."<div class='form-group'>"
+                            ."<label class='col-form-label'>作品名稱:</label>"
+                            ."<input type='text' class='form-control'  value='".$portfolio->name."' id='updatePortfolioName_".$portfolio->id."' name='updatePortfolioName_".$portfolio->id."'>"
+                            ."<label class='col-form-label'>作品說明:</label>"
+                            ."<input type='text' class='form-control'  value='".$portfolio->discription."' id='updatePortfolioDiscription_".$portfolio->id."'  name='updatePortfolioDiscription_".$portfolio->id."'>"
+                        ."</div>"
+                    ."</div>"
+                    ."<div class='modal-footer'>"
+                        ."<button type='button' class='btn btn-secondary' data-dismiss='modal' onclick='recoverEditPortfolioModal(".$portfolio->id.")' >取消</button>"
+                        ."<button type='button' class='btn btn-info' data-dismiss='modal' onclick='editPortfolioAndReload(".$portfolio->id.")' >儲存</button>"
+                    ."</div>"
+                ."</div>"
+            ."</div>"
+        ."</div>";
         return $RightContentHtml;
     }
 }

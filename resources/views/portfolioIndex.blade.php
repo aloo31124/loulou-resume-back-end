@@ -7,6 +7,7 @@
 <script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/editeCategoryInLeftTreeMenu.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/deleteCategoryInLeftTreeMenu.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/addPortfolio.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('/js/portfolioIndex/editPortfolio.js') }}"></script>
 
 
 <script>
