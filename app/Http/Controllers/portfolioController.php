@@ -113,6 +113,13 @@ class portfolioController extends Controller
         return $this->buildRightContent($reqeust);
     }
 
+    public function deletePortfolioInDBAndReload(Request $request){  
+        $db = portfolio::find($request->portfolioId);        
+        $db->is_delete = 1;
+        $db->save();  
+        return $this->buildRightContent($request);    
+    }
+
     function buildRightContent(Request $request){
         $db = new portfolio();
         $portfolioInfoFromDB = $db -> findportfolioInfoByCategoryId($request->currentCategoryId);

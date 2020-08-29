@@ -66,3 +66,4 @@ Route::get('/portfolioCategoryGetParentId','portfolioController@findCategoryPare
 
 Route::get('/portfolioAdd','portfolioController@insertPortfolioInDBAndReload');
 Route::get('/portfolioEdit','portfolioController@updatePortfolioInDBAndReload');
+Route::get('/portfolioDelete','portfolioController@deletePortfolioInDBAndReload');
