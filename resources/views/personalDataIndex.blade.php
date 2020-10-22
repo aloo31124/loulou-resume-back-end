@@ -25,13 +25,15 @@ function show_AddBaseInfoBar(){
 </script>
 
 
+
 <div id="addBaseInfoBar" class="row">      
   <div class="col-12 col-lg-12" style="margin-top:20px">
+    <h2>基本資料</h2>
     <button id="addBaseInfoBtn" type="button" class="btn btn-info" >新增</button>
     <form id="addBaseInfoForm" action="/personalData" method="POST" style="display:none" >
       {{ csrf_field() }}
-      <input type="text" placeholder="請輸入資料" name="insertPersonalDataName">
-      <input type="text" placeholder="請輸入資料" name="insertPersonalDataValue">
+      <input type="text" placeholder="請輸入資料名稱" name="insertPersonalDataName">
+      <input type="text" placeholder="請輸入資料內容" name="insertPersonalDataValue">
       <input type="submit" id="submitBaseInfoAddedBtn" class="btn btn-info">
       <button id="cancelBaseInfoBtn" type="button" class="btn btn-secondary" >取消</button>
     </form>
@@ -47,8 +49,7 @@ function show_AddBaseInfoBar(){
             <th scope="col">編碼</th>
             <th scope="col">資料名稱</th>
             <th scope="col">資料內容</th>
-            <th scope="col">編輯資料</th>
-            <th scope="col">刪除資料</th>
+            <th scope="col" class="row">操作</th>
             </tr>
         </thead>
         
@@ -58,14 +59,12 @@ function show_AddBaseInfoBar(){
             <td> {{  $PersonalData->id }} </td>
             <td> {{  $PersonalData->personalDataName }} </td>
             <td> {{  $PersonalData->personalDataValue }} </td>
-            <td>
-                <input type="submit" value="edit" class="btn btn-info" data-toggle="modal" data-target="#editDataModalTargetId_{{ $PersonalData->id }}" >
-            </td>
-            <td>
+            <td class="row">
+                <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" data-toggle="modal" data-target="#editDataModalTargetId_{{ $PersonalData->id }}" >            
                 <form action="/personalData/delete/{{ $PersonalData->id }}" method="POST" >                  
                     @csrf
                     @method('DELETE')
-                    <input type="submit" value="delete" class="btn btn-danger" >
+                    <input type="submit" value="刪除" class="btn btn-danger" >
                 </form>
             </td>
             </tr>
