@@ -2,17 +2,42 @@
 
 @section('content')
 
+<script>
+$(document).ready(function(){ 
+  show_AddBaseInfoBar();
+});
 
-<div class="row">
-    <div class="col-12 col-lg-12" style="margin-top:20px">
-        <form action="/personalData" method="POST">
-        {{ csrf_field() }}
-            <input type="text" placeholder="請輸入資料" name="insertPersonalDataName">
-            <input type="text" placeholder="請輸入資料" name="insertPersonalDataValue">
-            <input type="submit" class="btn btn-info">
-        </form>
-    </div>
+function show_AddBaseInfoBar(){
+  $('#addBaseInfoBtn').click(function(e){
+    $('#addBaseInfoBtn').hide();
+    $('#addBaseInfoForm').show();
+  });
+  $('#submitBaseInfoAddedBtn').click(function(e){    
+    $('#addBaseInfoBtn').show();
+    $('#addBaseInfoForm').hide();
+  });
+  $('#cancelBaseInfoBtn').click(function(e){    
+    $('#addBaseInfoBtn').show();
+    $('#addBaseInfoForm').hide();
+  });
+}
+
+</script>
+
+
+<div id="addBaseInfoBar" class="row">      
+  <div class="col-12 col-lg-12" style="margin-top:20px">
+    <button id="addBaseInfoBtn" type="button" class="btn btn-info" >新增</button>
+    <form id="addBaseInfoForm" action="/personalData" method="POST" style="display:none" >
+      {{ csrf_field() }}
+      <input type="text" placeholder="請輸入資料" name="insertPersonalDataName">
+      <input type="text" placeholder="請輸入資料" name="insertPersonalDataValue">
+      <input type="submit" id="submitBaseInfoAddedBtn" class="btn btn-info">
+      <button id="cancelBaseInfoBtn" type="button" class="btn btn-secondary" >取消</button>
+    </form>
+  </div>
 </div>
+
 
 <div class="row">
 <div class="col-12 col-lg-12" style="margin-top:20px">
@@ -89,8 +114,6 @@
 function closeModalAndReload(){
   location.reload();
 }
-
-
 </script>
 
 @endsection
