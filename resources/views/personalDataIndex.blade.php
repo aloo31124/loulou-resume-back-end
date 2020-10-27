@@ -60,8 +60,8 @@ function submit_EditBaseInfo(id){
 function show_EditBaseInfo(id){
   $('#baseInfoRow_' + id ).html(
     '<td>' + '<span>' + id + '</span>' + '</td>' +
-    '<td>' + '<input type="text" class="form-control" id="personalDataName_'+ id +'" value="' + $("#personalDataName_" + id ).text() + '">' + '</td>' +
-    '<td>' + '<input type="text" class="form-control" id="personalDataValue_'+ id +'" value="' + $("#personalDataValue_" + id ).text() +'">' +'</td>' +
+    '<td>' + '<input type="text" class="form-control" id="personalDataName_'+ id +'" value="' + $.trim($("#personalDataName_" + id ).text()) + '">' + '</td>' +
+    '<td>' + '<input type="text" class="form-control" id="personalDataValue_'+ id +'" value="' + $.trim($("#personalDataValue_" + id ).text()) +'">' +'</td>' +
     '<td>' + 
       '<input type="submit" value="儲存" class="btn btn-info" style="margin-right:10px" onclick="submit_EditBaseInfo(' + id+ ')" >' +
       '<button type="button" class="btn btn-secondary" onclick="cancel_EditBaseInfo(' + id+ ')" >取消</button>  '  + 
