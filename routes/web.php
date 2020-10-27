@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::get('/personalData','personalDataController@index');
 Route::post('/personalData','personalDataController@insertPesonalDataInDB');
 Route::delete('/personalData/delete/{personalData}','personalDataController@deletePesonalDataInDB');
-Route::put('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');
+Route::post('/personalData/edit/{personalData}','personalDataController@updatePesonalDataInDB');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

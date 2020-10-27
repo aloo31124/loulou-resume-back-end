@@ -22,31 +22,55 @@ function show_AddBaseInfoBar(){
   });
 }
 
+function submit_EditBaseInfo(id){  
+  var updatePersonalDataName = $("#personalDataName_" + id ).val();
+  var updatePersonalDataValue = $("#personalDataValue_" + id ).val();  
+  
+  //reload personal data table
+  $('#baseInfoRow_' + id ).html(    
+    '<td>' + id + '</td>' +
+    '<td id="personalDataName_'+ id +'" >' + updatePersonalDataName + '</td>' +
+    '<td id="personalDataValue_'+ id +'" >' + updatePersonalDataValue + "</td>" +
+    '<td class="row">' +
+      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo('+ id +')" > ' +
+      '<form action="/personalData/delete/'+ id +'" method="POST" >' +
+        '@csrf' +
+        '@method("DELETE")' +
+        '<input type="submit" value="刪除" class="btn btn-danger" >' +
+      '</form>' +
+    '</td>'
+  );
+
+  $.ajax({
+    type:'POST',
+    url:'/personalData/edit/'+ id,
+    data:{
+      updatePersonalDataName : updatePersonalDataName,
+      updatePersonalDataValue : updatePersonalDataValue,
+      "_token": "{{ csrf_token() }}"
+    },
+    success:function(result){
+      //console.log(result);
+    },error:function(){
+      console.log("submit_EditBaseInfo error");
+    }
+  });
+}
+
 function show_EditBaseInfo(id){
-  $('#baseInfoRow_' + id ).replaceWith(
-    '<div id="baseInfoRow_' + id + '">' +
-    '<form action="/personalData/edit/'+ id +'"  method="POST" >' +
-      '@csrf' +
-      '@method("PUT")' + 
-      '<div class="row" >' +
-      '<tr>' +
-        '<td>' + '<span style="margin-left:30px" >' + id + '</span>' + '</td>' +
-        '<td>' + '<input type="text" class="form-control col-4" style="margin-left:10px" id="personalDataName_'+ id +'" name="updatePersonalDataName"  value="' + $("#personalDataName_" + id ).text() + '">' + '</td>' +
-        '<td>' + '<input type="text" class="form-control col-4" style="margin-left:10px" id="personalDataValue_'+ id +'" name="updatePersonalDataValue" value="' + $("#personalDataValue_" + id ).text() +'">' +'</td>' +
-        '<td>' + 
-          '<input type="submit" value="儲存" class="btn btn-info" style="margin-left:10px" > ' +
-          '<button type="button" class="btn btn-secondary" style="margin-left:10px" onclick="cancel_EditBaseInfo(' + id+ ')" >取消</button>  '  + 
-        '</td>' +
-      '</tr>' +
-      '</div>' +
-    '</form>' +
-    '</div>' 
+  $('#baseInfoRow_' + id ).html(
+    '<td>' + '<span>' + id + '</span>' + '</td>' +
+    '<td>' + '<input type="text" class="form-control" id="personalDataName_'+ id +'" value="' + $("#personalDataName_" + id ).text() + '">' + '</td>' +
+    '<td>' + '<input type="text" class="form-control" id="personalDataValue_'+ id +'" value="' + $("#personalDataValue_" + id ).text() +'">' +'</td>' +
+    '<td>' + 
+      '<input type="submit" value="儲存" class="btn btn-info" style="margin-right:10px" onclick="submit_EditBaseInfo(' + id+ ')" >' +
+      '<button type="button" class="btn btn-secondary" onclick="cancel_EditBaseInfo(' + id+ ')" >取消</button>  '  + 
+    '</td>'
   );  
 }
 
 function cancel_EditBaseInfo(id){
-  $('#baseInfoRow_' + id ).replaceWith(
-    '<tr id="baseInfoRow_' + id + '">' +
+  $('#baseInfoRow_' + id ).html(    
     '<td>' + id + '</td>' +
     '<td id="personalDataName_'+ id +'" >' + $("#personalDataName_" + id ).val() + '</td>' +
     '<td id="personalDataValue_'+ id +'" >' + $("#personalDataValue_" + id ).val() + "</td>" +
@@ -57,8 +81,7 @@ function cancel_EditBaseInfo(id){
         '@method("DELETE")' +
         '<input type="submit" value="刪除" class="btn btn-danger" >' +
       '</form>' +
-    '</td>' +
-    '</tr>' 
+    '</td>'
   );
 }
 
