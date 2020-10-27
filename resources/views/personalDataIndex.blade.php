@@ -22,6 +22,46 @@ function show_AddBaseInfoBar(){
   });
 }
 
+function show_EditBaseInfo(id){
+  $('#baseInfoRow_' + id ).replaceWith(
+    '<div id="baseInfoRow_' + id + '">' +
+    '<form action="/personalData/edit/'+ id +'"  method="POST" >' +
+      '@csrf' +
+      '@method("PUT")' + 
+      '<div class="row" >' +
+      '<tr>' +
+        '<td>' + '<span style="margin-left:30px" >' + id + '</span>' + '</td>' +
+        '<td>' + '<input type="text" class="form-control col-4" style="margin-left:10px" id="personalDataName_'+ id +'" name="updatePersonalDataName"  value="' + $("#personalDataName_" + id ).text() + '">' + '</td>' +
+        '<td>' + '<input type="text" class="form-control col-4" style="margin-left:10px" id="personalDataValue_'+ id +'" name="updatePersonalDataValue" value="' + $("#personalDataValue_" + id ).text() +'">' +'</td>' +
+        '<td>' + 
+          '<input type="submit" value="儲存" class="btn btn-info" style="margin-left:10px" > ' +
+          '<button type="button" class="btn btn-secondary" style="margin-left:10px" onclick="cancel_EditBaseInfo(' + id+ ')" >取消</button>  '  + 
+        '</td>' +
+      '</tr>' +
+      '</div>' +
+    '</form>' +
+    '</div>' 
+  );  
+}
+
+function cancel_EditBaseInfo(id){
+  $('#baseInfoRow_' + id ).replaceWith(
+    '<tr id="baseInfoRow_' + id + '">' +
+    '<td>' + id + '</td>' +
+    '<td id="personalDataName_'+ id +'" >' + $("#personalDataName_" + id ).val() + '</td>' +
+    '<td id="personalDataValue_'+ id +'" >' + $("#personalDataValue_" + id ).val() + "</td>" +
+    '<td class="row">' +
+      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo('+ id +')" > ' +
+      '<form action="/personalData/delete/'+ id +'" method="POST" >' +
+        '@csrf' +
+        '@method("DELETE")' +
+        '<input type="submit" value="刪除" class="btn btn-danger" >' +
+      '</form>' +
+    '</td>' +
+    '</tr>' 
+  );
+}
+
 </script>
 
 
@@ -31,11 +71,13 @@ function show_AddBaseInfoBar(){
     <h2>基本資料</h2>
     <button id="addBaseInfoBtn" type="button" class="btn btn-info" >新增</button>
     <form id="addBaseInfoForm" action="/personalData" method="POST" style="display:none" >
-      {{ csrf_field() }}
-      <input type="text" placeholder="請輸入資料名稱" name="insertPersonalDataName">
-      <input type="text" placeholder="請輸入資料內容" name="insertPersonalDataValue">
-      <input type="submit" id="submitBaseInfoAddedBtn" class="btn btn-info">
-      <button id="cancelBaseInfoBtn" type="button" class="btn btn-secondary" >取消</button>
+      {{ csrf_field() }}  
+      <div class="row">    
+        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料名稱" name="insertPersonalDataName">
+        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料內容" name="insertPersonalDataValue">      
+        <input type="submit" id="submitBaseInfoAddedBtn" class="btn btn-info" style="margin-right:10px">      
+        <button id="cancelBaseInfoBtn" type="button" class="btn btn-secondary" >取消</button>      
+      </div>
     </form>
   </div>
 </div>
@@ -55,64 +97,24 @@ function show_AddBaseInfoBar(){
         
         <tbody>
         @foreach($PersonalDatas as $PersonalData)
-            <tr>
-            <td> {{  $PersonalData->id }} </td>
-            <td> {{  $PersonalData->personalDataName }} </td>
-            <td> {{  $PersonalData->personalDataValue }} </td>
-            <td class="row">
-                <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" data-toggle="modal" data-target="#editDataModalTargetId_{{ $PersonalData->id }}" >            
-                <form action="/personalData/delete/{{ $PersonalData->id }}" method="POST" >                  
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="刪除" class="btn btn-danger" >
-                </form>
-            </td>
+            <tr id="baseInfoRow_{{ $PersonalData->id }}" >
+              <td> {{  $PersonalData->id }} </td>
+              <td id="personalDataName_{{ $PersonalData->id }}"> {{  $PersonalData->personalDataName }} </td>
+              <td id="personalDataValue_{{ $PersonalData->id }}"> {{  $PersonalData->personalDataValue }} </td>
+              <td class="row">
+                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo({{  $PersonalData->id }})" >            
+                  <form action="/personalData/delete/{{ $PersonalData->id }}" method="POST" >                  
+                      @csrf
+                      @method('DELETE')
+                      <input type="submit" value="刪除" class="btn btn-danger" >
+                  </form>
+              </td>
             </tr>
-
-
-            <!-- Modal -->
-            <div class="modal fade " id="editDataModalTargetId_{{ $PersonalData->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
-              <div class="modal-dialog  modal-lg" role="document">
-                <form action="/personalData/edit/{{ $PersonalData->id }}" method="POST" >                    
-                  @csrf
-                  @method('PUT')
-
-                  <div class="modal-content">
-
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="editModalLabel">編輯基本資料</h5>
-                    </div>
-
-                    <div class="modal-body">                      
-                        <div class="form-group">
-                          <label class="col-form-label">資料名稱:</label>
-                          <input type="text" class="form-control"  value="{{  $PersonalData->personalDataName }}" name="updatePersonalDataName">
-                        </div>
-                        <label class="col-form-label">資料內容:</label>
-                        <input type="text" class="form-control"  value="{{  $PersonalData->personalDataValue }}" name="updatePersonalDataValue">                      
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModalAndReload()" >Close</button>
-                        <input type="submit" value="save changes" class="btn btn-info" >                            
-                    </div>
-                  </div>
-
-                </form> 
-              </div>
-            </div>
-
         @endforeach
         </tbody>
     </table>
 </div>
 </div>
 
-
-<script>
-function closeModalAndReload(){
-  location.reload();
-}
-</script>
 
 @endsection
