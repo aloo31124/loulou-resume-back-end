@@ -370,6 +370,46 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 </script>
 
+<style type="text/css">
+.right-content{
+  width:50%;
+  display: inline-block;     
+}
+
+.left-tree{
+  position:relative;
+  transform: translateX(-100%);
+  width:30%;
+  display: inline-block;  
+}
+
+.left-tree label {
+  position:absolute;
+  width: 40px;
+  height : 80px;
+  background-color: #000;
+  color: #fff;
+  right:-40px;
+  top : 0;
+  bottom: 0;
+  margin:auto;
+  line-height:80px;
+  text-align:center;
+  font-size:30px;
+  border-radius: 0 10px 10px 0;
+}
+
+#left-tree-swicth{
+  position:absolute;
+  opacity:0;
+}
+
+#left-tree-swicth:checked + .left-tree{
+  transform: translateX(0);
+}
+
+</style>
+
 <div class="row" style="margin-top:20px">
   <div class="col-11" >
     <button type='button' class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增能力分類</button>
@@ -398,15 +438,20 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   </div>
 </div>
 
+<input type="checkbox" name="" id="left-tree-swicth">
 
-<div class="row" style="margin-top:20px">
-  <div class="col-4">    
+
+  <div class="left-tree" >    
     <h2>選擇能力分類</h2>
-    <div id="workingAbilityLeftTree" class="list-group list-group-flush" style="margin-top:20px">
+    <div id="workingAbilityLeftTree" class="list-group list-group-flush" style="margin-top:20px">    
+      <label for="left-tree-swicth">
+        <i class="fa fa-angle-right"></i>
+         <
+      </label>
     </div>
   </div>
 
-  <div id="workingAbilityRightContent" class="col-8">  
+  <div id="workingAbilityRightContent" class="right-content">  
     <input type="hidden" id="currentWorkingAbilityCategoryId" name="currentWorkingAbilityCategoryId" value="0">
     <h2>分類名稱:<span id='WorkingAbilityCategoryTitle'></span></h2>    
     <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button>    
@@ -440,7 +485,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
     <div id="workingAbilityContentCard" class="card-deck" style="margin-top:20px"></div>
     
   </div>
-</div>
+
 
 
 @endsection
