@@ -371,16 +371,56 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 </script>
 
 <style type="text/css">
-.right-content{
-  width:50%;
-  display: inline-block;     
+@media screen and (max-width: 600px){
+  .right-content{
+    width:100%;
+    position:absolute;
+  }  
+  .left-tree{    
+    background-color: #fff;
+    width:80%;
+    position:absolute;
+    z-index:1;
+    transform: translateX(0);
+  }
+  .left-tree h2{    
+    z-index:1;
+  }
 }
 
-.left-tree{
-  position:relative;
-  transform: translateX(-100%);
-  width:30%;
-  display: inline-block;  
+
+@media screen and (min-width: 600px) and ( max-width: 1000px){
+  .right-content{
+    width:40%;
+    display: inline-block;   
+    position:absolute;
+    left:600px;
+  }
+
+  .left-tree{ 
+    width:400px;  
+    z-index:1;    
+    transform: translateX(0);    
+    display: inline-block;  
+    position:absolute;
+  }
+}
+
+@media screen and (min-width: 1000px){
+  .right-content{
+    width:40%;
+    display: inline-block;   
+    position:absolute;
+    left:600px;
+  }
+
+  .left-tree{ 
+    width:450px;  
+    z-index:1;    
+    transform: translateX(0);    
+    display: inline-block;  
+    position:absolute;
+  }
 }
 
 .left-tree label {
@@ -397,6 +437,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   text-align:center;
   font-size:30px;
   border-radius: 0 10px 10px 0;
+  z-index:2;
 }
 
 #left-tree-swicth{
@@ -405,8 +446,10 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 }
 
 #left-tree-swicth:checked + .left-tree{
-  transform: translateX(0);
+  transform: translateX(-100%);
 }
+
+
 
 </style>
 
@@ -443,12 +486,11 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
   <div class="left-tree" >    
     <h2>選擇能力分類</h2>
-    <div id="workingAbilityLeftTree" class="list-group list-group-flush" style="margin-top:20px">    
+    <nav id="workingAbilityLeftTree" class="list-group list-group-flush"></nav>  
       <label for="left-tree-swicth">
         <i class="fa fa-angle-right"></i>
          <
-      </label>
-    </div>
+      </label>    
   </div>
 
   <div id="workingAbilityRightContent" class="right-content">  
