@@ -422,6 +422,15 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
     position:absolute;
   }
 }
+.left-tree{ 
+  background-color: #F0FFFF;
+  position:absolute;  
+  height:100%;
+}
+.left-tree li{ 
+  background-color: #F0FFFF;
+  width:90%;
+}
 
 .left-tree label {
   position:absolute;
@@ -453,13 +462,6 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 </style>
 
-<div class="row" style="margin-top:20px">
-  <div class="col-11" >
-    <button type='button' class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增能力分類</button>
-    <button type='button' class='btn btn-info' id='editWorkingAbilityBtn' onclick='buildEditWorkingAbilityCategoryHtml()' >重新命名能力分類</button>
-    <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteWorkingAbilityCategoryModal' onclick='buildDeleteWorkingAbilityCategoryModalInfo()' >刪除能力分類</button>
-  </div>
-</div>
 
 <div class="modal" id="deleteWorkingAbilityCategoryModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog" role="document">
@@ -484,7 +486,17 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 <input type="checkbox" name="" id="left-tree-swicth">
 
 
-  <div class="left-tree" >    
+  <div class="left-tree" >  
+
+  
+    <div class="row" style="margin-top:20px">
+      <div class="col-11" >
+        <button type='button' class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增能力分類</button>
+        <button type='button' class='btn btn-info' id='editWorkingAbilityBtn' onclick='buildEditWorkingAbilityCategoryHtml()' >重新命名能力分類</button>
+        <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteWorkingAbilityCategoryModal' onclick='buildDeleteWorkingAbilityCategoryModalInfo()' >刪除能力分類</button>
+      </div>
+    </div>
+
     <h2>選擇能力分類</h2>
     <nav id="workingAbilityLeftTree" class="list-group list-group-flush"></nav>  
       <label for="left-tree-swicth">
