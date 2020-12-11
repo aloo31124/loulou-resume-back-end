@@ -103,9 +103,9 @@ class workingAbilityController extends Controller
         $cardCount = 1;
         $cardNumInRow = 2;
         foreach($workingAbilityInfoFromDB as $workingAbilityInfo){
-            if($cardCount%$cardNumInRow==1  ) $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml."<div class='row col-12' style='margin-top:20px'>";
+            
             $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml
-            ."<div class='card col-md-12 col-md-12 col-12'>"
+            ."<div class='card'>"
                 ."<div class='card-body'>"
                     ."<h5 class='card-title'>"
                         ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
@@ -116,7 +116,7 @@ class workingAbilityController extends Controller
                     ."<input type='button' value='刪除' class='btn btn-danger' onclick='deleteWorkingAbilityAndReloadRightContentCard(".$workingAbilityInfo->id.")' >"
                 ."</div>"
             ."</div>";
-            if($cardCount%$cardNumInRow==0  ) $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml."</div>";
+            
             $workingAbilityInfoCardHtml = $this->buildWorkingAbilityEditModalHtml($workingAbilityInfoCardHtml,$workingAbilityCategoryId,$workingAbilityInfo);
             $cardCount ++;
         }

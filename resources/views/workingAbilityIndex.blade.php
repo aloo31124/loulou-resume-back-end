@@ -408,7 +408,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 @media screen and (min-width: 1000px){
   .right-content{
-    width:40%;
+    width:50%;
     display: inline-block;   
     position:absolute;
     left:600px;
@@ -487,7 +487,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 
   <div class="left-tree" >  
-
+    <h2>選擇能力分類</h2>
   
     <div class="row" style="margin-top:20px">
       <div class="col-11" >
@@ -497,7 +497,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
       </div>
     </div>
 
-    <h2>選擇能力分類</h2>
+    
     <nav id="workingAbilityLeftTree" class="list-group list-group-flush"></nav>  
       <label for="left-tree-swicth">
         <i class="fa fa-angle-right"></i>
