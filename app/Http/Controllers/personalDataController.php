@@ -8,9 +8,12 @@ use App\PersonalData;
 class personalDataController extends Controller
 {
     public function index(){   
-        $PersonalDatas = PersonalData::all();        
+        $db = new PersonalData();
+        $BaseInfos = $db->findBaseInfo();  
+        $ContactInfos = $db->findContactInfo();
         return view("personalDataIndex", [
-            'PersonalDatas' => $PersonalDatas
+            'BaseInfos' => $BaseInfos,
+            'ContactInfos' => $ContactInfos
         ]);  
     }
 

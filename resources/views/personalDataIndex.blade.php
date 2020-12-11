@@ -87,6 +87,18 @@ function cancel_EditBaseInfo(id){
 
 </script>
 
+<div class="container-fluid col-lg-11">
+
+
+<div class="row">      
+  <div class="col-12 col-lg-12" style="margin-top:20px">
+    <h2>網頁標頭</h2>
+      姓名:</br>
+      主標:</br>
+      副標:</br>
+      頭像連結:</br>
+    </div>
+</div>
 
 
 <div id="addBaseInfoBar" class="row">      
@@ -119,14 +131,14 @@ function cancel_EditBaseInfo(id){
         </thead>
         
         <tbody>
-        @foreach($PersonalDatas as $PersonalData)
-            <tr id="baseInfoRow_{{ $PersonalData->id }}" >
-              <td> {{  $PersonalData->id }} </td>
-              <td id="personalDataName_{{ $PersonalData->id }}"> {{  $PersonalData->personalDataName }} </td>
-              <td id="personalDataValue_{{ $PersonalData->id }}"> {{  $PersonalData->personalDataValue }} </td>
+        @foreach($BaseInfos as $BaseInfo )
+            <tr id="baseInfoRow_{{ $BaseInfo->id }}" >
+              <td> {{  $BaseInfo->id }} </td>
+              <td id="personalDataName_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataName }} </td>
+              <td id="personalDataValue_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataValue }} </td>
               <td class="row">
-                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo({{  $PersonalData->id }})" >            
-                  <form action="/personalData/delete/{{ $PersonalData->id }}" method="POST" >                  
+                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo({{  $BaseInfo->id }})" >            
+                  <form action="/personalData/delete/{{ $BaseInfo->id }}" method="POST" >                  
                       @csrf
                       @method('DELETE')
                       <input type="submit" value="刪除" class="btn btn-danger" >
@@ -137,6 +149,60 @@ function cancel_EditBaseInfo(id){
         </tbody>
     </table>
 </div>
+</div>
+
+
+<div id="addContactInfoBar" class="row">      
+  <div class="col-12 col-lg-12" style="margin-top:20px">
+    <h2>聯絡方式</h2>
+    <button id="" type="button" class="btn btn-info" >新增</button>
+    <form id="" action="/personalData" method="POST" style="display:none" >
+      {{ csrf_field() }}  
+      <div class="row">    
+        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料名稱" name="">
+        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料內容" name="">      
+        <input type="submit" id="" class="btn btn-info" style="margin-right:10px">      
+        <button id="" type="button" class="btn btn-secondary" >取消</button>      
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+<div class="col-12 col-lg-12" style="margin-top:20px">
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">編碼</th>
+            <th scope="col">資料名稱</th>
+            <th scope="col">資料內容</th>
+            <th scope="col" class="row">操作</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+        @foreach($ContactInfos as $ContactInfo)
+            <tr id="baseInfoRow_{{ $ContactInfo->id }}" >
+              <td> {{  $ContactInfo->id }} </td>
+              <td id="personalDataName_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataName }} </td>
+              <td id="personalDataValue_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataValue }} </td>
+              <td class="row">
+                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo({{  $ContactInfo->id }})" >            
+                  <form action="/personalData/delete/{{ $ContactInfo->id }}" method="POST" >                  
+                      @csrf
+                      @method('DELETE')
+                      <input type="submit" value="刪除" class="btn btn-danger" >
+                  </form>
+              </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+
 </div>
 
 
