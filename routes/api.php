@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('personalData','personalDataApiController@index');
+Route::get('personalData/baseInfo','personalDataApiController@getBaseInfo');
+Route::get('personalData/contactInfo','personalDataApiController@getContactInfo');

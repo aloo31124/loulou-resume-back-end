@@ -17,6 +17,16 @@ class personalDataApiController extends Controller
         return PersonalData::all();
     }
 
+    public function getBaseInfo(){
+        $db = new PersonalData;
+        return $db->findBaseInfo();
+    }
+
+    public function getContactInfo(){
+        $db = new PersonalData;
+        return $db->findContactInfo();        
+    }
+
     /**
      * Store a newly created resource in storage.
      *
