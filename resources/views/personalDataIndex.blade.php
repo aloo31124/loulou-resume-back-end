@@ -5,6 +5,7 @@
 <script>
 $(document).ready(function(){ 
   show_AddBaseInfoBar();
+  show_AddContactInfoBar();
 });
 
 function show_AddBaseInfoBar(){
@@ -22,7 +23,22 @@ function show_AddBaseInfoBar(){
   });
 }
 
-function submit_EditBaseInfo(id){  
+function show_AddContactInfoBar(){
+  $('#addContactInfoBtn').click(function(e){
+    $('#addContactInfoBtn').hide();
+    $('#addContactInfoForm').show();
+  });
+  $('#submitContactInfoAddedBtn').click(function(e){    
+    $('#addContactInfoBtn').show();
+    $('#addContactInfoForm').hide();
+  });
+  $('#cancelContactInfoBtn').click(function(e){    
+    $('#addContactInfoBtn').show();
+    $('#addContactInfoForm').hide();
+  });
+}
+
+function submit_EditPersonalData(id){  
   var updatePersonalDataName = $("#personalDataName_" + id ).val();
   var updatePersonalDataValue = $("#personalDataValue_" + id ).val();  
   
@@ -32,7 +48,7 @@ function submit_EditBaseInfo(id){
     '<td id="personalDataName_'+ id +'" >' + updatePersonalDataName + '</td>' +
     '<td id="personalDataValue_'+ id +'" >' + updatePersonalDataValue + "</td>" +
     '<td class="row">' +
-      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo('+ id +')" > ' +
+      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData('+ id +')" > ' +
       '<form action="/personalData/delete/'+ id +'" method="POST" >' +
         '@csrf' +
         '@method("DELETE")' +
@@ -52,30 +68,30 @@ function submit_EditBaseInfo(id){
     success:function(result){
       //console.log(result);
     },error:function(){
-      console.log("submit_EditBaseInfo error");
+      console.log("submit_EditPersonalData error");
     }
   });
 }
 
-function show_EditBaseInfo(id){
+function show_EditPersonalData(id){
   $('#baseInfoRow_' + id ).html(
     '<td>' + '<span>' + id + '</span>' + '</td>' +
     '<td>' + '<input type="text" class="form-control" id="personalDataName_'+ id +'" value="' + $.trim($("#personalDataName_" + id ).text()) + '">' + '</td>' +
     '<td>' + '<input type="text" class="form-control" id="personalDataValue_'+ id +'" value="' + $.trim($("#personalDataValue_" + id ).text()) +'">' +'</td>' +
     '<td>' + 
-      '<input type="submit" value="儲存" class="btn btn-info" style="margin-right:10px" onclick="submit_EditBaseInfo(' + id+ ')" >' +
-      '<button type="button" class="btn btn-secondary" onclick="cancel_EditBaseInfo(' + id+ ')" >取消</button>  '  + 
+      '<input type="submit" value="儲存" class="btn btn-info" style="margin-right:10px" onclick="submit_EditPersonalData(' + id+ ')" >' +
+      '<button type="button" class="btn btn-secondary" onclick="cancel_EditPersonalData(' + id+ ')" >取消</button>  '  + 
     '</td>'
   );  
 }
 
-function cancel_EditBaseInfo(id){
+function cancel_EditPersonalData(id){
   $('#baseInfoRow_' + id ).html(    
     '<td>' + id + '</td>' +
     '<td id="personalDataName_'+ id +'" >' + $("#personalDataName_" + id ).val() + '</td>' +
     '<td id="personalDataValue_'+ id +'" >' + $("#personalDataValue_" + id ).val() + "</td>" +
     '<td class="row">' +
-      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo('+ id +')" > ' +
+      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData('+ id +')" > ' +
       '<form action="/personalData/delete/'+ id +'" method="POST" >' +
         '@csrf' +
         '@method("DELETE")' +
@@ -110,6 +126,7 @@ function cancel_EditBaseInfo(id){
       <div class="row">    
         <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料名稱" name="insertPersonalDataName">
         <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料內容" name="insertPersonalDataValue">      
+        <input type="hidden" value="BaseInfo" name="insertDataType" >
         <input type="submit" id="submitBaseInfoAddedBtn" class="btn btn-info" style="margin-right:10px">      
         <button id="cancelBaseInfoBtn" type="button" class="btn btn-secondary" >取消</button>      
       </div>
@@ -137,7 +154,7 @@ function cancel_EditBaseInfo(id){
               <td id="personalDataName_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataName }} </td>
               <td id="personalDataValue_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataValue }} </td>
               <td class="row">
-                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo({{  $BaseInfo->id }})" >            
+                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData({{  $BaseInfo->id }})" >            
                   <form action="/personalData/delete/{{ $BaseInfo->id }}" method="POST" >                  
                       @csrf
                       @method('DELETE')
@@ -155,14 +172,15 @@ function cancel_EditBaseInfo(id){
 <div id="addContactInfoBar" class="row">      
   <div class="col-12 col-lg-12" style="margin-top:20px">
     <h2>聯絡方式</h2>
-    <button id="" type="button" class="btn btn-info" >新增</button>
-    <form id="" action="/personalData" method="POST" style="display:none" >
+    <button id="addContactInfoBtn" type="button" class="btn btn-info" >新增</button>
+    <form id="addContactInfoForm" action="/personalData" method="POST" style="display:none" >
       {{ csrf_field() }}  
-      <div class="row">    
-        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料名稱" name="">
-        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料內容" name="">      
-        <input type="submit" id="" class="btn btn-info" style="margin-right:10px">      
-        <button id="" type="button" class="btn btn-secondary" >取消</button>      
+      <div class="row">       
+        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料名稱" name="insertPersonalDataName">
+        <input type="text" class="form-control col-4" style="margin-right:10px" placeholder="請輸入資料內容" name="insertPersonalDataValue">      
+        <input type="hidden" value="ContactInfo" name="insertDataType" >     
+        <input type="submit" id="submitContactInfoAddedBtn" class="btn btn-info" style="margin-right:10px">      
+        <button id="cancelContactInfoBtn" type="button" class="btn btn-secondary" >取消</button>      
       </div>
     </form>
   </div>
@@ -187,7 +205,7 @@ function cancel_EditBaseInfo(id){
               <td id="personalDataName_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataName }} </td>
               <td id="personalDataValue_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataValue }} </td>
               <td class="row">
-                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditBaseInfo({{  $ContactInfo->id }})" >            
+                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData({{  $ContactInfo->id }})" >            
                   <form action="/personalData/delete/{{ $ContactInfo->id }}" method="POST" >                  
                       @csrf
                       @method('DELETE')

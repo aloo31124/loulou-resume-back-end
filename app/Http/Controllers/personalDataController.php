@@ -20,7 +20,8 @@ class personalDataController extends Controller
     public function insertPesonalDataInDB(Request $request){
         $db = new PersonalData();
         $db->personalDataName = $request->insertPersonalDataName;
-        $db->personalDataValue = $request->insertPersonalDataValue;
+        $db->personalDataValue = $request->insertPersonalDataValue;        
+        $db->dataType = $request->insertDataType;
         $db->save();
         return redirect('personalData');
     }
