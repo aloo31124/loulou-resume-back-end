@@ -143,7 +143,7 @@ function cancel_EditPersonalData(id){
             <th scope="col">編碼</th>
             <th scope="col">資料名稱</th>
             <th scope="col">資料內容</th>
-            <th scope="col" class="row">操作</th>
+            <th scope="col">操作</th>
             </tr>
         </thead>
         
@@ -194,7 +194,7 @@ function cancel_EditPersonalData(id){
             <th scope="col">編碼</th>
             <th scope="col">資料名稱</th>
             <th scope="col">資料內容</th>
-            <th scope="col" class="row">操作</th>
+            <th scope="col">操作</th>
             </tr>
         </thead>
         
