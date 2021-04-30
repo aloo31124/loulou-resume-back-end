@@ -2,6 +2,33 @@
 
 @section('content')
 
+<style>
+  .main {
+    width: 80%;
+    margin: 15px auto;
+  }
+  .table-content{
+    width: 100%;
+  }
+  .table-content th{    
+    background:#17a2b8;
+    color:#ffff;
+    padding: 15px 10px;
+  }
+  .table-content td{
+    padding: 5px 10px;
+  }
+  .table-content tr:nth-child(even){
+    background:#cae9e9;
+  }
+  .table-content tr:nth-child(odd){
+    background:#ffff;
+  }
+  .table-content input{
+    margin: 3px auto;
+  }
+</style>
+
 <script>
 $(document).ready(function(){ 
   show_AddBaseInfoBar();
@@ -47,8 +74,8 @@ function submit_EditPersonalData(id){
     '<td>' + id + '</td>' +
     '<td id="personalDataName_'+ id +'" >' + updatePersonalDataName + '</td>' +
     '<td id="personalDataValue_'+ id +'" >' + updatePersonalDataValue + "</td>" +
-    '<td class="row">' +
-      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData('+ id +')" > ' +
+    '<td>' +
+      '<input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData('+ id +')" > ' +
       '<form action="/personalData/delete/'+ id +'" method="POST" >' +
         '@csrf' +
         '@method("DELETE")' +
@@ -90,8 +117,8 @@ function cancel_EditPersonalData(id){
     '<td>' + id + '</td>' +
     '<td id="personalDataName_'+ id +'" >' + $("#personalDataName_" + id ).val() + '</td>' +
     '<td id="personalDataValue_'+ id +'" >' + $("#personalDataValue_" + id ).val() + "</td>" +
-    '<td class="row">' +
-      '<input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData('+ id +')" > ' +
+    '<td>' +
+      '<input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData('+ id +')" > ' +
       '<form action="/personalData/delete/'+ id +'" method="POST" >' +
         '@csrf' +
         '@method("DELETE")' +
@@ -107,7 +134,7 @@ function cancel_EditPersonalData(id){
 
 
 <div class="row">      
-  <div class="col-12 col-lg-12" style="margin-top:20px">
+  <div class="main">
     <h2>網頁標頭</h2>
       姓名:</br>
       主標:</br>
@@ -118,7 +145,7 @@ function cancel_EditPersonalData(id){
 
 
 <div id="addBaseInfoBar" class="row">      
-  <div class="col-12 col-lg-12" style="margin-top:20px">
+  <div class="main">
     <h2>基本資料</h2>
     <button id="addBaseInfoBtn" type="button" class="btn btn-info" >新增</button>
     <form id="addBaseInfoForm" action="/personalData" method="POST" style="display:none" >
@@ -136,14 +163,14 @@ function cancel_EditPersonalData(id){
 
 
 <div class="row">
-<div class="col-12 col-lg-12" style="margin-top:20px">
-    <table class="table">
+<div class="main">
+    <table class="table-content">
         <thead>
             <tr>
-            <th scope="col">編碼</th>
-            <th scope="col">資料名稱</th>
-            <th scope="col">資料內容</th>
-            <th scope="col">操作</th>
+            <th>編碼</th>
+            <th>資料名稱</th>
+            <th>資料內容</th>
+            <th>操作</th>
             </tr>
         </thead>
         
@@ -153,8 +180,8 @@ function cancel_EditPersonalData(id){
               <td> {{  $BaseInfo->id }} </td>
               <td id="personalDataName_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataName }} </td>
               <td id="personalDataValue_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataValue }} </td>
-              <td class="row">
-                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData({{  $BaseInfo->id }})" >            
+              <td>
+                  <input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData({{  $BaseInfo->id }})" >            
                   <form action="/personalData/delete/{{ $BaseInfo->id }}" method="POST" >                  
                       @csrf
                       @method('DELETE')
@@ -170,7 +197,7 @@ function cancel_EditPersonalData(id){
 
 
 <div id="addContactInfoBar" class="row">      
-  <div class="col-12 col-lg-12" style="margin-top:20px">
+  <div class="main">
     <h2>聯絡方式</h2>
     <button id="addContactInfoBtn" type="button" class="btn btn-info" >新增</button>
     <form id="addContactInfoForm" action="/personalData" method="POST" style="display:none" >
@@ -187,14 +214,14 @@ function cancel_EditPersonalData(id){
 </div>
 
 <div class="row">
-<div class="col-12 col-lg-12" style="margin-top:20px">
-    <table class="table">
+<div class="main">
+    <table class="table-content">
         <thead>
             <tr>
-            <th scope="col">編碼</th>
-            <th scope="col">資料名稱</th>
-            <th scope="col">資料內容</th>
-            <th scope="col">操作</th>
+            <th>編碼</th>
+            <th>資料名稱</th>
+            <th>資料內容</th>
+            <th>操作</th>
             </tr>
         </thead>
         
@@ -204,8 +231,8 @@ function cancel_EditPersonalData(id){
               <td> {{  $ContactInfo->id }} </td>
               <td id="personalDataName_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataName }} </td>
               <td id="personalDataValue_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataValue }} </td>
-              <td class="row">
-                  <input type="submit" value="編輯" class="btn btn-info" style="margin-right:10px" onclick="show_EditPersonalData({{  $ContactInfo->id }})" >            
+              <td>
+                  <input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData({{  $ContactInfo->id }})" >            
                   <form action="/personalData/delete/{{ $ContactInfo->id }}" method="POST" >                  
                       @csrf
                       @method('DELETE')
