@@ -18,14 +18,76 @@
   .table-content td{
     padding: 5px 10px;
   }
-  .table-content tr:nth-child(even){
-    background:#cae9e9;
-  }
   .table-content tr:nth-child(odd){
     background:#ffff;
   }
+  .table-content tr:nth-child(even){
+    background:#cae9e9;
+  }
+
   .table-content input{
-    margin: 3px auto;
+  }
+  .table-content .div-button-group{
+    display:inline-flex
+  }
+  .table-content .div-button-group input {
+    margin: 5px 5px;
+  }
+  .table-content .div-button-group input + input {    
+  }
+
+  @media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px) {
+    .table-collapse-rows-twd 
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+
+    .table-collapse-rows-twd thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    .table-collapse-rows-twd tr {
+      border-bottom: 2px solid #17a2b8;
+    }
+
+    .table-collapse-rows-twd td {
+      position: relative;
+      padding-left: 50% !important;
+      text-align: left !important;
+    }
+
+    .table-collapse-rows-twd td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding: 5px 5px;
+      font-weight: bold;
+      background:#17a2b8;
+      color:#ffff;
+      height: 95%;      
+      border-bottom: 1px solid #fff;
+    }
+    .table-personal-data-rwd td:nth-of-type(1):before {
+      content: "編號";
+    }
+    .table-personal-data-rwd td:nth-of-type(2):before {
+      content: "資料名稱";
+    }
+    .table-personal-data-rwd td:nth-of-type(3):before {
+      content: "資料內容";
+    }
+    .table-personal-data-rwd td:nth-of-type(4):before {
+      content: "操作";
+    }
   }
 </style>
 
@@ -75,12 +137,14 @@ function submit_EditPersonalData(id){
     '<td id="personalDataName_'+ id +'" >' + updatePersonalDataName + '</td>' +
     '<td id="personalDataValue_'+ id +'" >' + updatePersonalDataValue + "</td>" +
     '<td>' +
-      '<input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData('+ id +')" > ' +
-      '<form action="/personalData/delete/'+ id +'" method="POST" >' +
-        '@csrf' +
-        '@method("DELETE")' +
-        '<input type="submit" value="刪除" class="btn btn-danger" >' +
-      '</form>' +
+        '<div class="div-button-group">' +
+        '<input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData('+ id +')" > ' +
+        '<form action="/personalData/delete/'+ id +'" method="POST" >' +
+          '@csrf' +
+          '@method("DELETE")' +
+          '<input type="submit" value="刪除" class="btn btn-danger" >' +
+        '</form>' +
+      '</div>' +
     '</td>'
   );
 
@@ -118,12 +182,14 @@ function cancel_EditPersonalData(id){
     '<td id="personalDataName_'+ id +'" >' + $("#personalDataName_" + id ).val() + '</td>' +
     '<td id="personalDataValue_'+ id +'" >' + $("#personalDataValue_" + id ).val() + "</td>" +
     '<td>' +
-      '<input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData('+ id +')" > ' +
-      '<form action="/personalData/delete/'+ id +'" method="POST" >' +
-        '@csrf' +
-        '@method("DELETE")' +
-        '<input type="submit" value="刪除" class="btn btn-danger" >' +
-      '</form>' +
+      '<div class="div-button-group">' +
+        '<input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData('+ id +')" > ' +
+        '<form action="/personalData/delete/'+ id +'" method="POST" >' +
+          '@csrf' +
+          '@method("DELETE")' +
+          '<input type="submit" value="刪除" class="btn btn-danger" >' +
+        '</form>' +
+      '</div>' +
     '</td>'
   );
 }
@@ -164,7 +230,7 @@ function cancel_EditPersonalData(id){
 
 <div class="row">
 <div class="main">
-    <table class="table-content">
+    <table class="table-content table-collapse-rows-twd table-personal-data-rwd">
         <thead>
             <tr>
             <th>編碼</th>
@@ -180,13 +246,15 @@ function cancel_EditPersonalData(id){
               <td> {{  $BaseInfo->id }} </td>
               <td id="personalDataName_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataName }} </td>
               <td id="personalDataValue_{{ $BaseInfo->id }}"> {{  $BaseInfo->personalDataValue }} </td>
-              <td>
+              <td>                
+                <div class="div-button-group">
                   <input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData({{  $BaseInfo->id }})" >            
                   <form action="/personalData/delete/{{ $BaseInfo->id }}" method="POST" >                  
                       @csrf
                       @method('DELETE')
                       <input type="submit" value="刪除" class="btn btn-danger" >
                   </form>
+                </div>
               </td>
             </tr>
         @endforeach
@@ -215,7 +283,7 @@ function cancel_EditPersonalData(id){
 
 <div class="row">
 <div class="main">
-    <table class="table-content">
+    <table class="table-content table-collapse-rows-twd table-personal-data-rwd">
         <thead>
             <tr>
             <th>編碼</th>
@@ -232,12 +300,14 @@ function cancel_EditPersonalData(id){
               <td id="personalDataName_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataName }} </td>
               <td id="personalDataValue_{{ $ContactInfo->id }}"> {{  $ContactInfo->personalDataValue }} </td>
               <td>
+                <div class="div-button-group">
                   <input type="submit" value="編輯" class="btn btn-info" onclick="show_EditPersonalData({{  $ContactInfo->id }})" >            
                   <form action="/personalData/delete/{{ $ContactInfo->id }}" method="POST" >                  
                       @csrf
                       @method('DELETE')
                       <input type="submit" value="刪除" class="btn btn-danger" >
                   </form>
+                </div>
               </td>
             </tr>
         @endforeach
