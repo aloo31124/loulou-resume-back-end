@@ -93,9 +93,43 @@ function changeChapterSort(MovingDirection,id){
 
 </script>
 
+<style>
+  .main {
+    width: 80%;
+    margin: 15px auto;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);    
+    width: 100%;
+    transition: 0.3s;
+    border-radius: 5px;
+    margin: 25px auto;
+  }
+
+  .card-head {        
+    padding: 5px 20px;    
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background:#17a2b8;
+    color:#ffff;
+  }
+
+  .card-button-group {
+    padding: 5px 10px;
+  }
+
+  .card-body {
+    padding: 5px 25px;
+  }
+
+</style>
+
+<div class="main">
+
 <h2 style="margin-top:20px">撰寫自傳</h2>
-<div class="row" style="margin-top:20px">
-    <button type='button' class='btn btn-info' id='addChapter' onclick='' data-toggle="modal" data-target="#addChapterModal" >新增章節</button>     
+<button type='button' class='btn btn-info' id='addChapter' onclick='' data-toggle="modal" data-target="#addChapterModal" >新增章節</button>     
+    
     
     <!-- 新增章節 Modal 視窗 start -->
     <div class="modal fade bd-example-modal-xl" id="addChapterModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"  >
@@ -124,25 +158,25 @@ function changeChapterSort(MovingDirection,id){
         </div>
     </div>
     <!-- 新增章節 Modal 視窗 end -->
-</div>
+
 
 <input type='hidden' id='IsAddChapterTextAreaOpen' value='false' >
-<div id='addChapterTextArea' class='form-group' style='margin-top:20px'></div>
 
 @foreach($autobiographyAllChapters as $autobiographyAllChapter )
-<hr />
-<div class="row form-inline" >
-    <h1>{{ $autobiographyAllChapter->title}}</h2>
-    &nbsp;&nbsp;&nbsp;
-    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#editChapterModal_{{$autobiographyAllChapter->id}}" >編輯</button>
-    &nbsp;&nbsp;&nbsp;
-    <button type='button' class='btn btn-danger' data-toggle="modal" data-target="#deleteChapterModal_{{$autobiographyAllChapter->id}}" >刪除</button>
-    &nbsp;&nbsp;&nbsp;
-    <button type='button' class='btn btn-success' onclick="changeChapterSort('up',{{$autobiographyAllChapter->id}})" >上移</button>
-    &nbsp;&nbsp;&nbsp;
-    <button type='button' class='btn btn-success' onclick="changeChapterSort('down',{{$autobiographyAllChapter->id}})" >下移</button>
+<div class="card">
+    <div class="card-head">
+        <h2>{{ $autobiographyAllChapter->title}} </h2>
+    </div>
+    <div class="card-button-group" >        
+        <button type='button' class='btn btn-info' data-toggle="modal" data-target="#editChapterModal_{{$autobiographyAllChapter->id}}" >編輯</button>
+        <button type='button' class='btn btn-danger' data-toggle="modal" data-target="#deleteChapterModal_{{$autobiographyAllChapter->id}}" >刪除</button>
+        <button type='button' class='btn btn-success' onclick="changeChapterSort('up',{{$autobiographyAllChapter->id}})" >上移</button>
+        <button type='button' class='btn btn-success' onclick="changeChapterSort('down',{{$autobiographyAllChapter->id}})" >下移</button>
+    </div>
+    <div class="card-body" >
+    <spane>{!! $autobiographyAllChapter->content !!} </span>
+    </div>
 </div>
-<spane>{!! $autobiographyAllChapter->content !!} </span>
 
     <!-- 編輯章節 Modal 視窗 start -->
     <div class="modal fade bd-example-modal-xl" id="editChapterModal_{{$autobiographyAllChapter->id}}" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"  >
@@ -197,5 +231,8 @@ function changeChapterSort(MovingDirection,id){
 
 @endforeach
 <hr />
+
+
+</div>
 
 @endsection
