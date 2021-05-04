@@ -371,6 +371,11 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 </script>
 
 <style type="text/css">
+
+.left-tree-header{
+  padding: 10px 20px;
+}
+
 @media screen and (max-width: 600px){
   .right-content{
     width:100%;
@@ -391,7 +396,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 @media screen and (min-width: 600px) and ( max-width: 1000px){
   .right-content{
-    width:40%;
+    margin: 10px 20px;
     display: inline-block;   
     position:absolute;
     left:600px;
@@ -423,12 +428,12 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   }
 }
 .left-tree{ 
-  background-color: #F0FFFF;
+  background-color: #cae9e9;
   position:absolute;  
   height:100%;
 }
 .left-tree li{ 
-  background-color: #F0FFFF;
+  background-color: #cae9e9;
   width:90%;
 }
 
@@ -487,14 +492,11 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 
   <div class="left-tree" >  
-    <h2>選擇能力分類</h2>
-  
-    <div class="row" style="margin-top:20px">
-      <div class="col-11" >
-        <button type='button' class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增能力分類</button>
-        <button type='button' class='btn btn-info' id='editWorkingAbilityBtn' onclick='buildEditWorkingAbilityCategoryHtml()' >重新命名能力分類</button>
-        <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteWorkingAbilityCategoryModal' onclick='buildDeleteWorkingAbilityCategoryModalInfo()' >刪除能力分類</button>
-      </div>
+    <div class="left-tree-header">
+      <h2>選擇能力分類</h2>  
+      <button type='button' style="margin-top:5px" class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增分類</button>
+      <button type='button' style="margin-top:5px"  class='btn btn-info' id='editWorkingAbilityBtn' onclick='buildEditWorkingAbilityCategoryHtml()' >重新命名分類</button>
+      <button type='button' style="margin-top:5px"  class='btn btn-danger' data-toggle='modal' data-target='#deleteWorkingAbilityCategoryModal' onclick='buildDeleteWorkingAbilityCategoryModalInfo()' >刪除分類</button>
     </div>
 
     
