@@ -372,6 +372,8 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 <style type="text/css">
 
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+
 .left-tree-header{
   padding: 10px 20px;
 }
@@ -439,18 +441,18 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 .left-tree label {
   position:absolute;
-  width: 40px;
-  height : 80px;
-  background-color: #000;
+  width: 70px;
+  height : 70px;
+  background-color: #17a2b8;
   color: #fff;
   right:-40px;
   top : 0;
   bottom: 0;
   margin:auto;
-  line-height:80px;
+  line-height:62px;  
   text-align:center;
-  font-size:30px;
-  border-radius: 0 10px 10px 0;
+  font-size:45px;
+  border-radius: 70px 70px 70px 70px;
   z-index:2;
 }
 
@@ -463,6 +465,15 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   transform: translateX(-100%);
 }
 
+#left-tree-swicth:checked + .left-tree label .fa{
+  transform: scale(-1);  
+}
+
+#left-tree-swicth:checked + .left-tree label {
+  right:-40px;
+  text-align:right;
+  padding: 0px 20px;
+}
 
 
 </style>
@@ -502,8 +513,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
     
     <nav id="workingAbilityLeftTree" class="list-group list-group-flush"></nav>  
       <label for="left-tree-swicth">
-        <i class="fa fa-angle-right"></i>
-         <
+        <i class="fa fa-angle-left"></i>         
       </label>    
   </div>
 
