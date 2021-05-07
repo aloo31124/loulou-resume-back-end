@@ -504,7 +504,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
   <div class="left-tree" >  
     <div class="left-tree-header">
-      <h2>選擇能力分類</h2>  
+      <h2>選擇能力分類1111</h2>  
       <button type='button' style="margin-top:5px" class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增分類</button>
       <button type='button' style="margin-top:5px"  class='btn btn-info' id='editWorkingAbilityBtn' onclick='buildEditWorkingAbilityCategoryHtml()' >重新命名分類</button>
       <button type='button' style="margin-top:5px"  class='btn btn-danger' data-toggle='modal' data-target='#deleteWorkingAbilityCategoryModal' onclick='buildDeleteWorkingAbilityCategoryModalInfo()' >刪除分類</button>
