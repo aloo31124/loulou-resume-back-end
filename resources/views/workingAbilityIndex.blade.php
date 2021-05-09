@@ -396,12 +396,12 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 }
 
 
-@media screen and (min-width: 600px) and ( max-width: 1000px){
+@media screen and (min-width: 850px) and ( max-width: 1100px){
   .right-content{
     margin: 10px 20px;
     display: inline-block;   
     position:absolute;
-    left:600px;
+    left:450px;
   }
 
   .left-tree{ 
@@ -413,7 +413,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   }
 }
 
-@media screen and (min-width: 1000px){
+@media screen and (min-width: 1100px){
   .right-content{
     width:50%;
     display: inline-block;   
