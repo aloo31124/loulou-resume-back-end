@@ -105,16 +105,20 @@ class workingAbilityController extends Controller
         foreach($workingAbilityInfoFromDB as $workingAbilityInfo){
             
             $workingAbilityInfoCardHtml = $workingAbilityInfoCardHtml
-            ."<div class='card'>"
-                ."<div class='card-body'>"
-                    ."<h5 class='card-title'>"
+            ."<div class='right-content-card'>"
+                ."<div class='right-content-card-head'>"   
+                    ."<h5>"
                         ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
                         .$workingAbilityInfo->name 
-                    ."</h5>"            
+                    ."</h5>"
+                ."</div>"        
+                ."<div class='right-content-card-body'>"    
                     ."<p class='card-text'>".$workingAbilityInfo->discription ."</p>"
+                ."</div>"
+                ."<div class='right-content-card-button-group'>" 
                     ."<input type='submit' value='編輯' class='btn btn-info' data-toggle='modal' data-target='#editWorkingAbilityModal_".$workingAbilityInfo->id."' >"
                     ."<input type='button' value='刪除' class='btn btn-danger' onclick='deleteWorkingAbilityAndReloadRightContentCard(".$workingAbilityInfo->id.")' >"
-                ."</div>"
+                ."</div>" 
             ."</div>";
             
             $workingAbilityInfoCardHtml = $this->buildWorkingAbilityEditModalHtml($workingAbilityInfoCardHtml,$workingAbilityCategoryId,$workingAbilityInfo);

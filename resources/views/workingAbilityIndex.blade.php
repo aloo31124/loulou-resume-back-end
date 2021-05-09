@@ -378,6 +378,39 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   padding: 10px 20px;
 }
 
+.right-content{
+  margin: 10px auto
+}
+
+.right-content-card-container{
+  margin: 10px auto;
+  width: 90%;
+}
+
+  .right-content-card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);    
+    width: 100%;
+    transition: 0.3s;
+    border-radius: 5px;
+    margin: 25px auto;
+  }
+
+  .right-content-card-head {        
+    padding: 5px 20px;    
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background:#17a2b8;
+    color:#ffff;
+  }
+
+  .right-content-card-button-group {
+    padding: 5px 10px;
+  }
+
+  .right-content-card-body {
+    padding: 5px 25px;
+  }
+
 @media screen and (max-width: 600px){
   .right-content{
     width:100%;
@@ -401,6 +434,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
     margin: 10px 20px;
     display: inline-block;   
     position:absolute;
+    width:50%;
     left:450px;
   }
 
@@ -415,10 +449,10 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 @media screen and (min-width: 1100px){
   .right-content{
-    width:50%;
+    width:75%;
     display: inline-block;   
     position:absolute;
-    left:600px;
+    left:500px;
   }
 
   .left-tree{ 
@@ -428,7 +462,16 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
     display: inline-block;  
     position:absolute;
   }
+  
+  .right-content-card{
+    margin: 10px auto;
+    width: 45%;
+    display: inline-block;  
+    margin: 10px 5px;
+  }
+  
 }
+
 .left-tree{ 
   background-color: #cae9e9;
   position:absolute;  
@@ -520,7 +563,13 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   <div id="workingAbilityRightContent" class="right-content">  
     <input type="hidden" id="currentWorkingAbilityCategoryId" name="currentWorkingAbilityCategoryId" value="0">
     <h2>分類名稱:<span id='WorkingAbilityCategoryTitle'></span></h2>    
-    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button>    
+    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button> 
+
+    <div id="workingAbilityContentCard" class="right-content-card-container" style="margin-top:20px"></div>
+    
+  </div>
+
+   
 
     <!--new working ability Modal start-->
     <div class="modal fade " id="newWorkingAbilityModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
@@ -547,11 +596,5 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
       </div>
     </div>
     <!--new working ability Modal end-->
-
-    <div id="workingAbilityContentCard" class="card-deck" style="margin-top:20px"></div>
-    
-  </div>
-
-
 
 @endsection
