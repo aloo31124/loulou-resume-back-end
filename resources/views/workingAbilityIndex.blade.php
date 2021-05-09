@@ -104,6 +104,13 @@ function buildTreeThisNodeNextLevel(workingAbilityCategoryId){
         console.log("workingAbilityTreeThisNodeNextLevel error ");
       }
     });
+    countLeftTreeHeight();
+}
+
+function countLeftTreeHeight(){
+  let leftTreeLiNum =  $("#workingAbilityLeftTree li").length;
+  let leftTreeHeight =  400 + leftTreeLiNum * 70 ;
+  $("#left-tree").css("height", leftTreeHeight + "px");
 }
 
 function showWorkingAbilityCategoryTitle(workingAbilityCategoryId){
@@ -475,11 +482,13 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 .left-tree{ 
   background-color: #cae9e9;
   position:absolute;  
-  height:100%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);    
+  border-right:1px #fff solid;
+  border-bottom:1px #fff solid;
 }
 .left-tree li{ 
   background-color: #cae9e9;
-  width:90%;
+  left:-20px;
 }
 
 .left-tree label {
@@ -497,6 +506,8 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   font-size:45px;
   border-radius: 70px 70px 70px 70px;
   z-index:2;
+  border:2px #fff solid;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);   
 }
 
 #left-tree-swicth{
@@ -545,7 +556,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 <input type="checkbox" name="" id="left-tree-swicth">
 
 
-  <div class="left-tree" >  
+  <div class="left-tree" id="left-tree">  
     <div class="left-tree-header">
       <h2>選擇能力分類</h2>  
       <button type='button' style="margin-top:5px" class='btn btn-info' id='addWorkingAbilityBtn' onclick='buildAddWorkingAbilityCategoryHtml()' >新增分類</button>
