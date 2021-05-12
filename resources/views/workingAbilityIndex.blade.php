@@ -109,7 +109,7 @@ function buildTreeThisNodeNextLevel(workingAbilityCategoryId){
 
 function countLeftTreeHeight(){
   let leftTreeLiNum =  $("#workingAbilityLeftTree li").length;
-  let leftTreeHeight =  400 + leftTreeLiNum * 70 ;
+  let leftTreeHeight =  600 + leftTreeLiNum * 60 ;
   $("#left-tree").css("height", leftTreeHeight + "px");
 }
 
@@ -483,8 +483,8 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   background-color: #cae9e9;
   position:absolute;  
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);    
-  border-right:1px #fff solid;
-  border-bottom:1px #fff solid;
+  border-right:2px #fff solid;
+  border-bottom:2px #fff solid;
 }
 .left-tree li{ 
   background-color: #cae9e9;
@@ -500,7 +500,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
   right:-40px;
   top : 0;
   bottom: 0;
-  margin:auto;
+  margin-top:250px;
   line-height:62px;  
   text-align:center;
   font-size:45px;
