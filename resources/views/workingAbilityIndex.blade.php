@@ -349,22 +349,25 @@ function cleanEditWorkingAbilityModal(){
 
 function deleteWorkingAbilityAndReloadRightContentCard(workingAbilityId){
   var currentWorkingAbilityCategoryId = $("#currentWorkingAbilityCategoryId").val();
-  $.ajax({
-    type:'DELETE',
-    url:'/workingAbility',
-    data:{
-      workingAbilityId : workingAbilityId,
-      currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
-      "_token": "{{ csrf_token() }}"
-    },
-    success:function(result){
-      $("#workingAbilityContentCard").html(result);
-    },
-    error:function(){
-      console.log("deleteWorkingAbilityAndReloadRightContentCard() error");
-    }
-  });
-  changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId);
+  var checkDelete = confirm("確定刪除作品?");
+  if(checkDelete){
+    $.ajax({
+      type:'DELETE',
+      url:'/workingAbility',
+      data:{
+        workingAbilityId : workingAbilityId,
+        currentWorkingAbilityCategoryId : currentWorkingAbilityCategoryId,
+        "_token": "{{ csrf_token() }}"
+      },
+      success:function(result){
+        $("#workingAbilityContentCard").html(result);
+      },
+      error:function(){
+        console.log("deleteWorkingAbilityAndReloadRightContentCard() error");
+      }
+    });
+    changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId);
+  }
 }
 
 function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
