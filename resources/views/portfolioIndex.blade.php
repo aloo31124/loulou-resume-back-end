@@ -30,15 +30,6 @@ function buildRightContentCard(ThisNodeCategoryId){
 }
 </script>
 
-<input type="hidden" id="currentCategoryId" value="0">
-
-<div class="row" style="margin-top:20px">
-  <div class="col-11" >
-    <button type='button' class='btn btn-info' id='addCategoryBtn' onclick='buildAddCategoryHtml()' >新增分類</button>
-    <button type='button' class='btn btn-info' id='editCategoryBtn' onclick='buildEditCategoryHtml()' >重新命名分類</button>
-    <button type='button' class='btn btn-danger' data-toggle='modal' onclick='buildDeleteCategoryModalInfo()' data-target='#deleteCategoryModal'  >刪除分類</button>
-  </div>
-</div>
 
 <div class="modal" id="deleteCategoryModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog" role="document">
@@ -60,16 +51,35 @@ function buildRightContentCard(ThisNodeCategoryId){
   </div>
 </div>
 
-<div class="row" style="margin-top:20px">
-  <div class="col-4">    
-    <h2>作品分類選單</h2>
-    <div id="LeftTreeMenu" class="list-group list-group-flush" style="margin-top:20px">
+
+<input type="checkbox" name="" id="left-tree-swicth">
+
+
+  <div class="left-tree" id="left-tree">  
+    <div class="left-tree-header">
+      <h2>選擇作品分類</h2>  
+      <button type='button' style="margin-top:5px" class='btn btn-info' id='addCategoryBtn' onclick='buildAddCategoryHtml()' >新增分類</button>
+      <button type='button' style="margin-top:5px"  class='btn btn-info' id='editCategoryBtn' onclick='buildEditCategoryHtml()' >重新命名分類</button>
+      <button type='button' style="margin-top:5px"  class='btn btn-danger' data-toggle='modal'  onclick='buildDeleteCategoryModalInfo()' data-target='#deleteCategoryModal'>刪除分類</button>
     </div>
+
+    
+    <nav id="LeftTreeMenu" class="list-group list-group-flush"></nav>  
+      <label for="left-tree-swicth">
+        <i class="fa fa-angle-left"></i>         
+      </label>    
   </div>
 
-  <div class="col-8">  
-    <h2>作品分類:<span id='RightContentTitle'></span></h2>    
-    <button type='button' class='btn btn-info' data-toggle="modal" onclick="buildAddPortfolioModalInfo()" data-target="#addPortfolioModal" >新增作品</button>    
+
+  <div class="right-content">  
+    <input type="hidden" id="currentCategoryId" name="currentCategoryId" value="0">
+    <h2>分類名稱:<span id='RightContentTitle'></span></h2>    
+    <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button> 
+
+    <div id="RightContent" class="right-content-card-container" style="margin-top:20px"></div>
+    
+  </div>
+
 
     <!--新增作品 Modal start-->
     <div class="modal fade " id="addPortfolioModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-backdrop="static">
@@ -96,8 +106,4 @@ function buildRightContentCard(ThisNodeCategoryId){
       </div>
     </div>
     <!--新增作品 Modal end-->
-
-    <div id="RightContent" class="card-deck" style="margin-top:20px" ></div>
-  </div>
-</div>
 @endsection('content')

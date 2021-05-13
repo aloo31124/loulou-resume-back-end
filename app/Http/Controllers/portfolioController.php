@@ -130,17 +130,22 @@ class portfolioController extends Controller
         foreach($portfolioInfoFromDB as $portfolio){
             if($cardCount%$cardNumInRow==1  ) $RightContentHtml = $RightContentHtml."<div class='row col-12' style='margin-top:20px'>";
             $RightContentHtml = $RightContentHtml
-            ."<div class='card col-md-12 col-12'>"
-                ."<div class='card-body'>"
-                    ."<h5 class='card-title' id='portfolio_name_".$portfolio->id."'>"
+            ."<div class='right-content-card'>"
+                ."<div class='right-content-card-head'>"   
+                    ."<h5 id='portfolio_name_".$portfolio->id."'>"
                         ."<img id='skill_icon' class='rounded' src='/icon/skill.png' alt='profile Pic'>"
                         .$portfolio->name 
-                    ."</h5>"            
-                    ."<p class='card-text' id='portfolio_discription_".$portfolio->id."'>".$portfolio->discription ."</p>"
+                    ."</h5>"
+                ."</div>"        
+                ."<div class='right-content-card-body'>"    
+                    ."<p class='card-text' id='portfolio_discription_".$portfolio->id."' >".$portfolio->discription ."</p>"
+                ."</div>"
+                ."<div class='right-content-card-button-group'>" 
                     ."<input type='submit' value='編輯' class='btn btn-info' data-toggle='modal' data-target='#editPortfolioModal_".$portfolio->id."' >"
                     ."<input type='button' value='刪除' class='btn btn-danger' onclick='deletePortfolioAndReload(".$portfolio->id.")' >"
-                ."</div>"
+                ."</div>" 
             ."</div>";
+            
             if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml."</div>"; 
             $RightContentHtml = $this->buildPortfolioEditModalHtml($RightContentHtml,$request->currentCategoryId,$portfolio);           
             $cardCount ++;

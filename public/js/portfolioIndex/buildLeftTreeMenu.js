@@ -45,6 +45,14 @@ $(document).ready(function(){
         console.log("buildNextLevelByThisNodeIdForTreeMenu error ");
       }
     });
+
+    countLeftTreeHeight()
+  }
+
+  function countLeftTreeHeight(){
+    let leftTreeLiNum =  $("#workingAbilityLeftTree li").length;
+    let leftTreeHeight =  400 + leftTreeLiNum * 60 > window.screen.height ? 400 + leftTreeLiNum * 60 : window.screen.height;    
+    $("#left-tree").css("height", leftTreeHeight + "px");
   }
   
   function changeTreeChildNodesShowAndHiden(clickImg){ 

@@ -108,10 +108,10 @@ function buildTreeThisNodeNextLevel(workingAbilityCategoryId){
 }
 
 function countLeftTreeHeight(){
-  let leftTreeLiNum =  $("#workingAbilityLeftTree li").length;
-  let leftTreeHeight =  600 + leftTreeLiNum * 60 ;
-  $("#left-tree").css("height", leftTreeHeight + "px");
-}
+    let leftTreeLiNum =  $("#workingAbilityLeftTree li").length;
+    let leftTreeHeight =  400 + leftTreeLiNum * 60 > window.screen.height ? 400 + leftTreeLiNum * 60 : window.screen.height;    
+    $("#left-tree").css("height", leftTreeHeight + "px");
+  }
 
 function showWorkingAbilityCategoryTitle(workingAbilityCategoryId){
   $.ajax({
@@ -380,9 +380,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
 
 </script>
 
-<style type="text/css">
-  @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
-</style>
+
 
 
 <div class="modal" id="deleteWorkingAbilityCategoryModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
@@ -423,7 +421,7 @@ function changeThisNodeNextLevelInTree(currentWorkingAbilityCategoryId){
       </label>    
   </div>
 
-  <div id="workingAbilityRightContent" class="right-content">  
+  <div class="right-content">  
     <input type="hidden" id="currentWorkingAbilityCategoryId" name="currentWorkingAbilityCategoryId" value="0">
     <h2>分類名稱:<span id='WorkingAbilityCategoryTitle'></span></h2>    
     <button type='button' class='btn btn-info' data-toggle="modal" data-target="#newWorkingAbilityModal" >新增能力</button> 
